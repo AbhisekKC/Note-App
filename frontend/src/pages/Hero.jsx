@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@base-ui/react/button'
 import { useNavigate } from 'react-router-dom'
 import { getData } from '@/context/userContext'
+import WeatherCard from '@/components/WeatherCard'
 
 function Hero() {
     // 1. Safe extraction check: ensure we handle undefined/null hook returns safely
@@ -20,9 +21,12 @@ function Hero() {
 
     return (
         <div className='relative w-full md:h-175 h-screen bg-green-50 overflow-hidden'>
-            <section className='w-full py-12 md:py-24 lg:py-32 xl:py-48'>
+            
+            <section className='w-full py-5 md:py-10 lg:py-10 xl:py-20'>
                 <div className='max-w-7xl mx-auto px-4 md:px-6'>
-                    <div className='flex flex-col items-center space-y-4 text-center'>
+                    <div className='flex flex-col items-center space-y-1 text-center'>
+                        {/* Weather app */}
+                        <WeatherCard />
                         
                         {/* SAFE RENDER: Uses the pre-verified safe string parameter */}
                         <h1 className="text-xl font-medium text-slate-700 tracking-tight">
@@ -32,7 +36,7 @@ function Hero() {
                         <div className='space-y-2'>
                             <Badge variant='primary' className='mb-4 text-green-800 border-green-200'>
                                 <Zap className='w-3 h-3 mr-1'/>
-                                New: AI-powered note organization.
+                                New: Note organization with Cloud save..
                             </Badge>
                             <h1 className='text-green-600 text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl'>
                                 Your thoughts, organized and accessible
@@ -51,14 +55,17 @@ function Hero() {
                                 Start Taking Notes
                                 <ArrowRight className='ml-2 h-4 w-4' />
                             </Button>
+                            {/* Maybe for future purposes
                             <Button variant='outline' size='lg' className='h-12 px-8 rounded-md bg-white text-gray-600 border-3 border-green-600 cursor-pointer hover:bg-slate-50 transition-colors text-sm font-medium shadow-sm'>
                                 Watch Demo
-                            </Button>
+                            </Button>  */}
+                            
                         </div>
-                        
+                                              
                         <p className='text-sm text-green-800 pt-4 font-medium'>
                             Free forever + No credit card required + 2 minutes setup
                         </p>
+                        
 
                     </div>
                 </div>

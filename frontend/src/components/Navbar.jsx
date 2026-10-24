@@ -55,14 +55,14 @@ function Navbar() {
             <div className='max-w-7xl mx-auto px-1 sm:px-2 lg:px-2 '>
                 <div className='flex justify-between items-center h-12'>
                     {/* Logo Section */}
-                <Link to="/to-notes" className='flex gap-2 items-center hover:opacity-90 transition-opacity flex-shrink-0' >
+                <Link to="/to-notes" className='flex gap-2 items-center hover:opacity-90 transition-opacity shrink-0' >
                     <BookOpen className='h-6 w-6 text-green-700' />
                     <h1 className='font-bold text-xl text-slate-900'><span className='text-green-600'>Notes</span>App</h1>
                 </Link>
 
                 {/* Navigation Links */}
                 <div className='flex gap-7 items-center'>
-                    <ul className='flex gap-2 items-center text-sm text-slate-600 font-medium'>
+                    <ul className='flex gap-2 items-center text-sm text-slate-800 font-medium'>
                         <li className='hover:text-green-600 transition-colors cursor-pointer'>
                             <Link to="/features" className='hover:text-green-600 transition-colors cursor-pointer hover:underline'>Features</Link>
                         </li>
@@ -121,10 +121,11 @@ function Navbar() {
                             </li>
                         ) : (
                             <li>
-                                <Link to='/login'>
-                                    <Button className="bg-green-600 hover:bg-green-700 text-white font-medium text-sm transition-colors cursor-pointer px-4 py-2 rounded-lg">
-                                        Login
-                                    </Button>
+                                <Link to='/login' className='hover:text-green-600 transition-colors'>
+                                    SignIn.
+                                </Link>
+                                <Link to='/signup'className='bg-green-600 text-white hover:bg-green-500 px-4 py-2 rounded-lg transition-colors shadow-sm'>
+                                    SignUp.
                                 </Link>
                             </li>
                         )}

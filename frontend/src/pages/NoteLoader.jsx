@@ -1,6 +1,6 @@
 import React from 'react'
 import { noteApi } from '@/api/axios'
-import { useState, useEffect } from 'react'
+import { useState, useEffect , useRef} from 'react'
 import { BookA, BookOpenCheck, Loader2 , ArrowLeft, Search , NotebookPen} from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -14,6 +14,8 @@ function NoteLoader() {
     const [content, setContent] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const [editingId, setEditingId] = useState(null)
+
+    const textAreaRef = useRef(null)
 
     // Fetch Notes on Load
     useEffect(() => {
@@ -117,7 +119,10 @@ function NoteLoader() {
             <div className='flex flex-col md:flex-row gap-6 max-w-none w-full items-start p-2'>
                 
                 {/* Form panel */}
-                <form onSubmit={handleSubmit} className='w-full md:w-80 bg-white p-4 rounded-xl border border-slate-200 flex flex-col gap-3 shrink-0 shadow-sm'>
+                <form
+                      
+                     onSubmit={handleSubmit} 
+                     className='w-full  md:w-80 bg-white p-4 rounded-xl border border-slate-200 flex flex-col gap-3 shrink-0 shadow-sm'>
                     <h2>
                         {editingId ? 
                             <div className="font-semibold text-xl text-rose-600 flex items-center gap-2">Edit Note??</div> :
@@ -131,16 +136,17 @@ function NoteLoader() {
                        onChange={(e) => setTitle(e.target.value)}
                     />
                     <textarea 
+                       ref={textAreaRef}
                        placeholder='Content.....'
                        rows='6'
                        value={content}
                        onChange={(e) => setContent(e.target.value)}
-                       className="w-full p-2 text-sm border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500/20 resize-none bg-slate-50"
+                       className="w-full h-auto p-2 text-sm border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500/20 resize-none bg-slate-50"
                     />
                     <Button
                          type='submit' 
                          className={`w-full text-white font-medium ${editingId ? 'bg-rose-600 hover:bg-rose-700' : 'bg-emerald-600 hover:bg-emerald-700'}`}>
-                            {editingId ? 'Save' : 'Add'}
+                            {editingId ? 'Update' : 'Add'}
                     </Button>  
                     {editingId && 
                         <Button 
@@ -190,7 +196,7 @@ function NoteLoader() {
                                 <div key={n._id || n.id} className='bg-white border border-slate-200 rounded-xl p-4 pr-6 shadow-sm flex flex-col justify-between min-h-40'>
                                     <div>
                                          <h2 className='font-bold text-slate-900 line-clamp-1'>{n.title}</h2>
-                                         <p className='h-30 text-xs text-slate-600 mt-2 whitespace-pre-wrap line-clamp-4'>{n.content}</p>
+                                         <p className='text-xs text-slate-600 mt-2 whitespace-pre-wrap flex-1 wrap-break-word pb-2 '>{n.content}</p>
                                     </div>
                                     
                                     <div className='mt-4 flex justify-between border-t border-slate-100 pt-2 text-xs font-medium'>
@@ -209,7 +215,14 @@ function NoteLoader() {
                                             <Button 
                                            type="button"
                                            className='bg-green-50 text-green-700 hover:bg-green-100 shadow-none'
-                                           onClick={() => { setEditingId(n._id || n.id); setTitle(n.title); setContent(n.content); }}>
+                                           onClick={
+                                                 () => { setEditingId(n._id || n.id); setTitle(n.title); setContent(n.content);
+                                                    if(textAreaRef.current){
+                                                        textAreaRef.current.focus();
+                                                        textAreaRef.current.scrollIntoView({behaviour:'smooth',block:'center'});
+                                                    }
+                                           
+                                                 }}>
                                             Edit
                                         </Button>
                                         <Button

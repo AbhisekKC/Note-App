@@ -14,12 +14,22 @@ import Navbar from "@/components/Navbar"
 import Profile from "./pages/Profile";
 import Features from "./pages/Features";
 import About from "./pages/About";
+import ScrollToTop from "./components/ScrollToTop";
+import NotFound from "./pages/NotFound";
+
+ 
+
 
 function App() {
+  
+ 
+ 
+
   return (
     <Router>
-
-      <div className='flex flex-col min-h-screen bg-green-200 w-full overflow'>
+      <ScrollToTop />
+       
+      <div className='flex flex-col min-h-screen bg-gray-300 w-full overflow'>
         <Navbar />
         <main className='flex-1 w-full flex flex-col'>
           <Routes>
@@ -43,6 +53,7 @@ function App() {
             <Route path='/verify/:token' element={<Verify />} />
             <Route path='/verify-otp/:email' element={<VerifyOTP />} />
             <Route path='/change-password/:email' element={<ChangePassword />} />
+            <Route path='*' element={<NotFound/>} />
 
           </Routes>
 

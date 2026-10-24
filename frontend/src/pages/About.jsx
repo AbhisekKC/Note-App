@@ -1,4 +1,4 @@
-// src/pages/About.jsx
+
 import React from 'react';
 
 const About = () => {
@@ -27,13 +27,14 @@ const About = () => {
         </p>
 
         <h2 className="text-2xl font-bold text-green-600 mt-8 mb-4">
-          Tech Stack Powering This App
+          Tech Stack & API Integrations.
         </h2>
         <ul className="space-y-3 pl-5 list-disc text-gray-600">
           <li><strong className="text-gray-900">MongoDB & Mongoose:</strong> Secure cloud data storage and data modeling.</li>
           <li><strong className="text-gray-900">Express & Node.js:</strong> High-performance API routes protected by robust security middleware and bcrypt salting functions.</li>
           <li><strong className="text-gray-900">React & Tailwind CSS:</strong> A dynamic, highly componentized web application framework.</li>
           <li><strong className="text-gray-900">Nodemailer & Google OAuth2:</strong> Services running backend automation for seamless user lifecycle management.</li>
+         <li><strong className="text-gray-900">OpenWeatherMap REST API:</strong> Integrated external microservices fetching live regional atmospheric variables using coordinated Axios geolocation requests.</li>
         </ul>
       </div>
     </div>
