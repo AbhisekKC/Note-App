@@ -141,7 +141,7 @@ function NoteLoader() {
                        rows='6'
                        value={content}
                        onChange={(e) => setContent(e.target.value)}
-                       className="w-full h-auto p-2 text-sm border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500/20 resize-none bg-slate-50"
+                       className="w-full h-64 min-h-64 p-3 text-sm border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500/20 resize-y bg-slate-50 shadow-inner"
                     />
                     <Button
                          type='submit' 

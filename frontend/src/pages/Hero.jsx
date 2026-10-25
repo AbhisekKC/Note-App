@@ -5,6 +5,7 @@ import { Button } from '@base-ui/react/button'
 import { useNavigate } from 'react-router-dom'
 import { getData } from '@/context/userContext'
 import WeatherCard from '@/components/WeatherCard'
+import { toast } from 'sonner'
 
 function Hero() {
     // 1. Safe extraction check: ensure we handle undefined/null hook returns safely
@@ -19,12 +20,23 @@ function Hero() {
         : 'Guest';
     const displayUsername = name.toUpperCase()
 
+    //3. New Click intercept handler
+    const handleStarNotes = () =>{
+        if(user) {
+            navigate('/to-notes')
+        } else{
+            toast.error('Access Denied! Please log in to open your notes dashboard',{duration:4000})
+           navigate('/login')
+        }
+    }
+
     return (
-        <div className='relative w-full md:h-175 h-screen bg-green-50 overflow-hidden'>
+        <div className='relative w-full md:h-175 min-h-screen bg-green-50 overflow-hidden'>
             
             <section className='w-full py-5 md:py-10 lg:py-10 xl:py-20'>
                 <div className='max-w-7xl mx-auto px-4 md:px-6'>
-                    <div className='flex flex-col items-center space-y-1 text-center'>
+                    <div className='flex flex-col items-center space-y-1 text-center '>
+                        
                         {/* Weather app */}
                         <WeatherCard />
                         
@@ -49,7 +61,7 @@ function Hero() {
                         
                         <div className='space-x-4 flex flex-row pt-2'>
                             <Button 
-                               onClick={() => navigate(user ? '/to-notes' : '/login')}
+                               onClick={handleStarNotes}
                                size='lg'
                                className='flex items-center h-12 px-8 relative bg-green-600 border-3 border-gray-600 text-white rounded-md cursor-pointer hover:bg-green-700 transition-colors shadow-sm font-medium text-sm'>
                                 Start Taking Notes
@@ -66,8 +78,10 @@ function Hero() {
                             Free forever + No credit card required + 2 minutes setup
                         </p>
                         
+                        
 
                     </div>
+                    
                 </div>
             </section>
         </div>

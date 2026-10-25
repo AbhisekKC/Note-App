@@ -1,5 +1,5 @@
 import React from 'react'
-import { BookA, BookOpen, LogOut, User } from 'lucide-react'
+import { BookA, BookOpen, LogOut, User , ShieldUser } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Button } from '@/components/ui/button' 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -51,7 +51,7 @@ function Navbar() {
     }
 
     return (
-        <nav className='p-4 border-b border-gray-100 sticky top-0 z-50 backdrop-blur-sm '>
+        <nav className='fixed top-0 left-0 w-full p-4 border-b border-gray-300 z-50 backdrop-blur-sm '>
             <div className='max-w-7xl mx-auto px-1 sm:px-2 lg:px-2 '>
                 <div className='flex justify-between items-center h-12'>
                     {/* Logo Section */}
@@ -63,12 +63,13 @@ function Navbar() {
                 {/* Navigation Links */}
                 <div className='flex gap-7 items-center'>
                     <ul className='flex gap-2 items-center text-sm text-slate-800 font-medium'>
+                        <li>
+                            <Link to="/" className='hover:text-green-600 transition-colors cursor-pointer hover:underline'>🏚️Home</Link>
+                        </li>
                         <li className='hover:text-green-600 transition-colors cursor-pointer'>
                             <Link to="/features" className='hover:text-green-600 transition-colors cursor-pointer hover:underline'>Features</Link>
                         </li>
-                        <li>
-                            <Link to="/to-notes" className='hover:text-green-600 transition-colors cursor-pointer hover:underline'>Notes</Link>
-                        </li>
+                        
                         <li className='hover:text-green-600 transition-colors cursor-pointer hover:underline'>
                             <Link to="/about" className='hover:text-green-600 transition-colors'>About</Link>
                         </li>
@@ -103,6 +104,10 @@ function Navbar() {
                                                 <User className="h-4 w-4" />
                                                 <span>Profile</span>
                                             </DropdownMenuItem>
+                                            <DropdownMenuItem className="cursor-pointer gap-2" onClick={() => navigate('/admin')}>
+                                                <ShieldUser className="h-4 w-4" /> 
+                                                <span>Admin Dashboard</span>
+                                            </DropdownMenuItem>
                                             
                                             <DropdownMenuItem className="cursor-pointer gap-2" onClick={() => navigate('/to-notes')}>
                                                 <BookA className="h-4 w-4" /> 
@@ -120,11 +125,11 @@ function Navbar() {
                                 </DropdownMenu>
                             </li>
                         ) : (
-                            <li>
-                                <Link to='/login' className='hover:text-green-600 transition-colors'>
-                                    SignIn.
+                            <li className='flex flex-col items-center gap-1'>
+                                <Link to='/login' className='bg-green-600 text-white hover:bg-green-500 px-1 py-2 rounded-lg transition-colors shadow-sm'>
+                                    LogIn.
                                 </Link>
-                                <Link to='/signup'className='bg-green-600 text-white hover:bg-green-500 px-4 py-2 rounded-lg transition-colors shadow-sm'>
+                                <Link to='/signup'className='bg-green-600 text-white hover:bg-green-500 px-1 py-2 rounded-lg transition-colors shadow-sm'>
                                     SignUp.
                                 </Link>
                             </li>

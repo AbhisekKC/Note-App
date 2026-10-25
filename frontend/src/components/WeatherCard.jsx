@@ -67,7 +67,7 @@ function WeatherCard() {
 
     // Complete presentation markup using your lucide icons
     return (
-        <div className='flex flex-col gap-2 p-5 bg-white shadow-md rounded-2xl border border-slate-100 max-w-sm w-full font-sans'>
+        <div className='flex flex-col gap-2 p-4 mb-4  bg-white shadow-md rounded-2xl border border-slate-100 max-w-sm w-full font-sans'>
             {/* 🚀 NEW CARD TITLE SECTION */}
             <div className="text-left">
                 <h3 className="text-sm font-bold text-slate-800 tracking-tight">

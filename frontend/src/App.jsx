@@ -16,29 +16,26 @@ import Features from "./pages/Features";
 import About from "./pages/About";
 import ScrollToTop from "./components/ScrollToTop";
 import NotFound from "./pages/NotFound";
-
- 
-
+import AdminDashboard from "./pages/AdminDashboard";
 
 function App() {
-  
- 
- 
-
   return (
     <Router>
       <ScrollToTop />
        
-      <div className='flex flex-col min-h-screen bg-gray-300 w-full overflow'>
+      {/* FIX 1: Replaced invalid 'overflow' with 'overflow-y-auto' or left to browser defaults */}
+      <div className='flex flex-col min-h-screen bg-green-100 w-full overflow-y-auto'>
         <Navbar />
-        <main className='flex-1 w-full flex flex-col'>
+        
+        {/* FIX 2: Added shrink-0 to prevent layout collapse, and let flex-1 grow dynamically */}
+        <main className='flex-1 w-full flex flex-col shrink-0 pt-20'>
           <Routes>
 
             {/* PROTECTED ROUTES: Only authenticated users can access these endpoints */}
             <Route element={<ProtectedRoute />}>
               <Route path='/to-notes' element={<NoteLoader />} />
               <Route path='/profile' element={<Profile/>}/>
-              {/* You can drop any other secure routes (like /profile) inside here later! */}
+              <Route path='/admin' element={<AdminDashboard/>} />
             </Route>
 
             {/* PUBLIC ROUTES: Anyone can view these pages anytime */}
@@ -56,12 +53,11 @@ function App() {
             <Route path='*' element={<NotFound/>} />
 
           </Routes>
-
         </main>
 
+        {/* FIX 3: Make sure your <Footer /> component inside Footer.jsx has the 'shrink-0' utility on its top-level HTML tag */}
         <Footer />
       </div>
-
     </Router>
   )
 }
