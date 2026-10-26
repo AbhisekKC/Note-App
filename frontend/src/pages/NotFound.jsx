@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { BookX } from 'lucide-react'
 function NotFound() {
   return (
-    <div className='bg-green-100 flex flex-col items-center justify-center flex-1 min-h-[60vh] text-center px-4 font-sans select-none'>
+    <div className='bg-linear-to-l from-green-200 to green-800 flex flex-col items-center justify-center flex-1 min-h-[60vh] text-center px-4 font-sans select-none'>
 
         {/*Visual indicator*/}
         <div className='bg-white p-4 rounded-full shadow-sm border border-slate-100 mb-4 animate-bounce'>

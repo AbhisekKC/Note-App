@@ -24,7 +24,7 @@ function App() {
       <ScrollToTop />
        
       {/* FIX 1: Replaced invalid 'overflow' with 'overflow-y-auto' or left to browser defaults */}
-      <div className='flex flex-col min-h-screen bg-green-100 w-full overflow-y-auto'>
+      <div className='bg-linear-to-l from-green-200 to-white  flex flex-col min-h-screen  w-full overflow-y-auto'>
         <Navbar />
         
         {/* FIX 2: Added shrink-0 to prevent layout collapse, and let flex-1 grow dynamically */}

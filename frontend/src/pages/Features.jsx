@@ -19,6 +19,10 @@ function Features() {
         {
             title:'Organized Workspace',
             description:'Keep your ideas structured using customizable folders, multi-tag filtering.'
+        },
+        {
+            title:'System Administration & Access Control Panel',
+            description:'A robust, centralized control center built to monitor real-time MERN stack application metrics and securely manage global user authentication paradigms. This dashboard serves as the administrative core for overriding user states and defending platform architecture parameters.'
         }
     ]
 
@@ -47,7 +51,7 @@ function Features() {
     ]
 
   return (
-    <div className='max-w-7xl mx-auto px-4 py-16 text-center bg-green-100'>
+    <div className='max-w-7xl mx-auto px-4 py-16 text-center bg-linear-to-l from-green-200 to green-800'>
         <h1 className='text-4xl font-extrabold text-gray-900 tracking-tight sm:text-5xl'>
             Product Features
         </h1>

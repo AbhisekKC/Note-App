@@ -1,7 +1,7 @@
 import React from 'react'
 import { useContext } from 'react'
 import {  UserContext } from '@/context/userContext'
-import {  Mail, CalendarDays, Clock , ShieldCheck, ShieldAlert, KeyRound, FileQuestion } from 'lucide-react'
+import {  Mail, CalendarDays, Clock , ShieldCheck, ShieldAlert, KeyRound, FileQuestion, User } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { useNavigate } from 'react-router-dom'
@@ -25,7 +25,7 @@ function Profile() {
      : ' Just Now!!'
 
     return (
-        <div className='bg-green-100 min-h-screen py-10 px-4 flex justify-center items-start'>
+        <div className='bg-linear-to-l from-green-200 to-white min-h-screen py-10 px-4 flex justify-center items-start'>
             <div className='w-full max-w-2xl bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden mt-6 mb-20'>
                 
                 {/* Header accent bar */}
@@ -42,7 +42,7 @@ function Profile() {
 
                 {/* Details panel */}
                 {/* FIXED: Increased top padding (pt-14) so the absolute overlay Avatar does not overlap header text */}
-                <div className='pt-14 p-8'>
+                <div className='bg-linear-to-l from-green-200 to-white pt-14 p-8'>
                     <div className='border-b pb-4'>
                         {/* FIXED: Swapped layout tags to inline blocks to prevent severe vertical text distortion */}
                         <div className='flex flex-wrap items-center gap-2 mb-2'>
@@ -58,7 +58,9 @@ function Profile() {
                                 <span className='inline-flex items-center gap-1 text-xs font-semibold bg-rose-50 text-rose-700 px-2 py-0.5 rounded-full border border-rose-200'>
                                     <ShieldAlert className='h-3.5 w-3.5' /> Not Verified yet
                                 </span>
-                            )}    
+                            )}
+                            Admin//User
+                            <User />    
                         </div>
                         <p className='text-sm text-slate-500 mt-0.5'>
                             Manage your secure cloud Account parameters.

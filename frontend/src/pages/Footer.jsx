@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom'
 function Footer() {
   const currentYear = new Date().getFullYear();
   return (
-    <footer className='w-full bg-green-200 border-t border-slate-200 mt-auto py-6 px-4 text-slate-600 font-sans shadow-inner z-40 shrink-0'>
+    <footer className='w-full bg-linear-to-l from-green-200 to-white border-t border-slate-200 mt-auto py-6 px-4 text-slate-600 font-sans shadow-inner z-40 shrink-0'>
       <div className='max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6'>
         
         {/* LOGO and COPYRIGHTS */}

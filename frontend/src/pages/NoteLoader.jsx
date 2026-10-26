@@ -104,7 +104,7 @@ function NoteLoader() {
     })
 
     return (
-        <div className="bg-green-100 min-h-screen w-full p-4 md:p-8 ">
+        <div className="bg-linear-to-l from-green-200 to-white min-h-screen w-full p-4 md:p-8 ">
             <div className='flex flex-row justify-between border-b border-green-200 pb-4'>
                <h1 className='text-2xl md:text-3xl  font-bold flex  items-center justify-center gap-2 mb-6'> 
                 <BookA className='text-green-600  h-10 w-10 shrink-0' /> <span>Start taking Notes..... </span>

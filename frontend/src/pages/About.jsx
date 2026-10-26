@@ -3,8 +3,8 @@ import React from 'react';
 
 const About = () => {
   return (
-    <div className="max-w-3xl mx-auto px-4 py-16 bg-green-100">
-      <div className="bg-white p-8 border border-gray-200 rounded-xl shadow-sm">
+    <div className="max-w-3xl mx-auto px-4 py-16 ">
+      <div className="bg-linear-to-l from-green-200 to-white p-8 border border-gray-200 rounded-xl shadow-sm">
         <h1 className="text-4xl font-extrabold text-green-600 mb-6">
           About Our NoteApp
         </h1>
