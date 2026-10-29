@@ -5,7 +5,7 @@ import Login from "./pages/Login";
 import VerifyEmail from "./pages/VerifyEmail";
 import Verify from "./pages/Verify";
 import ForgotPassword from "./pages/ForgotPassword";
-import ProtectedRoute from "./components/protectedRoute";
+import ProtectedRoute from "@/components/ProtectedRoute";
 import VerifyOTP from "./pages/VerifyOTP";
 import ChangePassword from "./pages/ChangePassword";
 import NoteLoader from "./pages/NoteLoader";
