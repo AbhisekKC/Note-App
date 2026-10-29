@@ -15,7 +15,8 @@ export const verifyMail = async (token, email) => {
   const emailTemplate = handlebars.compile(emailTemplatePath);
   
   const emailHtml = emailTemplate({ 
-    token: encodeURIComponent(token) 
+    token: encodeURIComponent(token),
+    frontendUrl: process.env.FRONTEND_URL || 'http://localhost:5173'
   });
 
   try {
@@ -35,7 +36,7 @@ export const verifyMail = async (token, email) => {
     };
 
     const info = await transporter.sendMail(mailConfiguration);
-    console.log('Email Verification sent:', info.messageId);
+   //  console.log('Email Verification sent:', info.messageId);
     return info;
   } catch (error) {
     console.error('Error sending email:', error);

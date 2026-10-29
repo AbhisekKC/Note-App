@@ -42,7 +42,6 @@ function Signup() {
         const token = res.data.token;
         if (token) {
           localStorage.setItem('token', token);
-          console.log('Token stored in localStorage:', token);
         }
 
         navigate('/verify');
