@@ -10,11 +10,12 @@ function WeatherCard() {
     const [error, setError] = useState(false);
     const [latt, setLatt] = useState('27.68');
     const [long, setLong] = useState('83.37');
+    const [city , setCity] = useState('butwal')
     const url = import.meta.env.VITE_WEATHER_URL;
     const api = import.meta.env.VITE_WEATHER_API_KEY;
 
-    const fetchWeather = async (lat, lon) => {
-        if (!lat || !lon) return;
+    const fetchWeather = async ( cit) => {
+        if (!cit) return;
         try {
             setLoading(true);
             setError(false); // Reset error status on new attempts
@@ -22,8 +23,8 @@ function WeatherCard() {
             // FIX 1: Swapped to the correct data engine subdomain URL
             const res = await axios.get(url, {
                 params: {
-                    lat: lat,
-                    lon: lon,
+                    
+                    q:cit,
                     appid: api,
                     units: 'metric',
                 },
@@ -41,12 +42,12 @@ function WeatherCard() {
     };
 
     useEffect(() => {
-        fetchWeather(latt, long);
+        fetchWeather(city);
     }, [api]); // Added api dependency to avoid linting warnings
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        fetchWeather(latt.trim(), long.trim());
+        fetchWeather( city.trim());
 
     }
 
@@ -80,8 +81,18 @@ function WeatherCard() {
 
             {/*Manual co-ordinates entry form*/}
             <form onSubmit={handleSubmit} className='flex gap-2 items-end border-b border-slate-100 pb-3'>
-                <div className='flex-1 flex gap-2'>
-                    <div className='flex-1 flex flex-col gap-1'>
+                <div className='flex-1 flex gap-2 '>
+                    <div className=' flex flex-col gap-1 w-full'>
+                        <label className='flex justify-start text-l  font-bold text-slate-600 uppercase tracking-wider'>Enter your City.</label>
+                        <Input
+                            type='text'
+                            placeholder='e.g: butwal'
+                            value={city}
+                            onChange={(e) => setCity(e.target.value)}
+                            className='w-full text-xs p-2 border border-slate-200 rounded-lg focus:outline-none focus:border-green-500 text-slate-700 bg-slate-50' />
+                    </div>
+                    {/*  these are for lattitude and longitude.
+                     <div className='flex-1 flex flex-col gap-1'>
                         <label className='text-l  font-bold text-slate-600 uppercase tracking-wider'>Lattitude.</label>
                         <Input
                             type='text'
@@ -99,6 +110,10 @@ function WeatherCard() {
                             onChange={(e) => setLong(e.target.value)}
                             className='w-full text-xs p-2 border border-slate-200 rounded-lg focus:outline-none focus:border-green-500 text-slate-700 bg-slate-50' />
                     </div>
+                    
+                    
+                    */}
+                    
                 </div>
                 <Button
                     type='submit'
