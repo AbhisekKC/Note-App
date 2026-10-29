@@ -12,8 +12,11 @@ const app = express();
 
 //middleware
 const allowedOrigins = ['http://localhost:5173','https://note-app-ui-six.vercel.app/']
+
 app.use(cors({
-    origin:allowedOrigins,
+    origin: function (origin , callback){
+        callback(null, true)
+    },
     credentials:true,
 }
 ));
