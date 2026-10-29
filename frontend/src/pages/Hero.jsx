@@ -64,7 +64,7 @@ function Hero() {
                                onClick={handleStarNotes}
                                size='lg'
                                className='flex items-center h-12 px-8 relative bg-green-600 border-3 border-gray-600 text-white rounded-md cursor-pointer hover:bg-green-700 transition-colors shadow-sm font-medium text-sm'>
-                                Start Taking Notes
+                                Get Started.
                                 <ArrowRight className='ml-2 h-4 w-4' />
                             </Button>
                             {/* Maybe for future purposes
