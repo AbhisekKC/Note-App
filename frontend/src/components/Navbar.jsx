@@ -15,7 +15,8 @@ import {
 import { UserContext } from '@/context/userContext'
 import { useContext } from 'react'
 import { toast } from 'sonner'
-import axios from 'axios'
+
+import { userApi } from '@/api/axios'
 
 function Navbar() {
     const navigate = useNavigate()
@@ -35,7 +36,7 @@ function Navbar() {
 
     const logoutHandler = async () => {
         try {
-            const res = await axios.post(`http://localhost:8000/user/logout`, {}, {
+            const res = await userApi.post(`/logout`, {}, {
                 headers: { Authorization: `Bearer ${accessToken}` }
             })
             if (res.data.success) {
