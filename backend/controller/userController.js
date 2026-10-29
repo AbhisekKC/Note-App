@@ -110,7 +110,7 @@ export const registerUser = async (req, res) => {
         await newUser.save();
 
         // 7. Send verification email
-        verifyMail(token, email);
+        await verifyMail(token, email);
 
 
         const userResponse = newUser.toObject();
