@@ -11,8 +11,9 @@ import cors from 'cors'
 const app = express();
 
 //middleware
+const allowedOrigins = ['http://localhost:5173','https://note-app-ui-six.vercel.app/']
 app.use(cors({
-    origin:'http://localhost:5173',
+    origin:allowedOrigins,
     credentials:true,
 }
 ));
