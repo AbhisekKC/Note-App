@@ -1,10 +1,11 @@
 import React from 'react'
 import { useContext } from 'react'
 import {  UserContext } from '@/context/userContext'
-import {  Mail, CalendarDays, Clock , ShieldCheck, ShieldAlert, KeyRound, FileQuestion, User } from 'lucide-react'
+import {  Mail, CalendarDays, Clock , ShieldCheck, ShieldAlert, KeyRound, FileQuestion, User, Users } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { useNavigate } from 'react-router-dom'
+import { AvatarImage } from '@/components/ui/avatar'
 
 function Profile() {
     const navigate = useNavigate();
@@ -33,6 +34,7 @@ function Profile() {
                 <div className='bg-linear-to-r from-emerald-600 to-green-600 h-32 w-full relative'>
                     <div className='absolute -bottom-10 left-8 z-10'>
                         <Avatar className='h-24 w-24 border-4 border-white shadow-md'>
+                            <AvatarImage src={user?.profilePicture} alt="Profile" />
                             <AvatarFallback className='bg-slate-800 text-white font-bold text-2xl uppercase select-none'>
                                 {getInitials()}
                             </AvatarFallback>
@@ -59,8 +61,17 @@ function Profile() {
                                     <ShieldAlert className='h-3.5 w-3.5' /> Not Verified yet
                                 </span>
                             )}
-                            Admin//User
-                            <User />    
+                            {user?.role === 'admin' ? (
+                                <span className='inline-flex items-center gap-1 text-xs font-semibold bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full border border-blue-200'>
+                                    <ShieldCheck className='h-3.5 w-3.5' /> Admin <User />  
+                                </span>
+                            ) : (
+                                <span className='inline-flex items-center gap-1 text-xs font-semibold bg-rose-50 text-green-700 px-2 py-0.5 rounded-full border border-rose-200'>
+                                    <ShieldAlert className='h-3.5 w-3.5' /> User <Users />
+                                </span>
+                            )}
+                            
+                              
                         </div>
                         <p className='text-sm text-slate-500 mt-0.5'>
                             Manage your secure cloud Account parameters.

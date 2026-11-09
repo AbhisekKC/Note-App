@@ -1,17 +1,21 @@
 import Note from "../models/noteModel.js";
+import User from "../models/userModel.js";
 
 //1.Create a new note
 
 export const createNote = async(req, res) =>{
     try {
         const {title , content } = req.body;
+        const user = await User.findById(req.userId); // Provided by isAuthenticated middleware
+        const {username} = user; 
         if(!title || !content) {
             return res.status(400).json({message:'Title and content are required!!!!', success:false})
         }
         const newNote = await Note.create({
             userId: req.userId, // Provided by isAuthenticated middleware
             title:title,
-            content:content
+            content:content,
+            creator: username 
         })
         return res.status(200).json({message:'Note created successfully', success:true , note: newNote})
         

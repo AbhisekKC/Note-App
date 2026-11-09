@@ -3,12 +3,13 @@ import { Input } from '@/components/ui/input'
 import { Loader2, ShieldAlert, Users, BookOpen, Activity, ShieldCheck, UserPlus, Trash2, X, Pen, User, FileText, Search } from 'lucide-react'
 import React, { useState, useEffect, useRef } from 'react'
 import { toast } from 'sonner'
+import { authApi } from '@/api/axios'
 
 export default function AdminDashboard() {
     const [metrics, setMetrics] = useState({ totalUsers: 0, totalNotes: 0, activeAdminCount: 1 })
     const [usersList, setUsersList] = useState([])
     const [notesList, setNotesList] = useState([])
-    const [noteSearchQuery , setNoteSearchQuery] = useState('')
+    const [noteSearchQuery, setNoteSearchQuery] = useState('')
     const [isLoading, setIsLoading] = useState(true)
 
     //update states for user
@@ -18,53 +19,104 @@ export default function AdminDashboard() {
 
     //Modal states for adding a user
     const [isAddModalOpen, setIsAddModalOpen] = useState(false)
-    const [newUserData, setNewUserData] = useState({ username: '', email: '', role: 'user' })
+    const [newUserData, setNewUserData] = useState({ username: '', email: '', password: '', role: 'user' })
 
-    useEffect(() => {
-        // Mock data baseline for initial UI rendering check
-        setUsersList([
-            { _id: '1', username: 'AbhisekKC', email: 'abhisekkc07@gmail.com', role: 'admin', createdAt: '2026-01-15' },
-            { _id: '2', username: 'JohnDoe', email: 'john@example.com', role: 'user', createdAt: '2026-03-22' },
-            { _id: '3', username: 'JaneSmith1', email: 'jane1@example.com', role: 'user', createdAt: '2026-05-10' },
-            { _id: '4', username: 'JaneSmith2', email: 'jane2@example.com', role: 'user', createdAt: '2026-05-10' },
-            { _id: '5', username: 'JaneSmith3', email: 'jane3@example.com', role: 'user', createdAt: '2026-05-10' },
+    // Mock data baseline for initial UI rendering check
+    let mockUsers = [
+        { _id: '2', username: 'JohnDoe', email: 'john@example.com', role: 'user', isVerified: false, createdAt: '2026-03-22' },
+        { _id: '3', username: 'JaneSmith1', email: 'jane1@example.com', role: 'user', isVerified: false, createdAt: '2026-05-10' },
+        { _id: '4', username: 'JaneSmith2', email: 'jane2@example.com', role: 'user', isVerified: false, createdAt: '2026-05-10' },
+        { _id: '5', username: 'JaneSmith3', email: 'jane3@example.com', role: 'user', isVerified: false, createdAt: '2026-05-10' },
+    ];
+
+    let mockNotes = [
+        { _id: 'n1', title: 'Deployment Guide', content: 'Configure production reverse proxy using Nginx architecture.', creator: 'AbhisekKC', createdAt: '2026-01-20' },
+        { _id: 'n5', title: 'Gym Routine', content: 'Sunday:-Chesday, Monday:-Backday, Tuesday:-legday and Repeat', creator: 'AbhisekKC', createdAt: '2026-10-21' },
+        { _id: 'n6', title: 'Todo list for my NoteAPP', content: ' 1. add google auth done.,2. profile section done.,3. Add features page done.,4. Add about page done.,5. Project already pushed to Github done.,6. Clickon nav link to take you to at the top of that page. same thing for edit note button , should take me to the edit section.,7. also the note content section starts clipping if its too long , make it expand if needed done.,8. Add a 404 page done.,9. learn how to push changes to github., 10. Added a mock admin panel for others users to see ,the mock data is only testing and has not been connected to the backend. Done., 11.Just deploy this version of this app for others to test and see.', creator: 'AbhisekKC', createdAt: '2026-10-21' },
+
+        { _id: 'n2', title: 'Shopping List', content: 'Buy whey protein, oats, peanut butter, and chicken breast.', creator: 'JohnDoe', createdAt: '2026-03-25' },
+        { _id: 'n3', title: 'MERN State Management', content: 'Use Redux Toolkit or Context API for simple global structures.', creator: 'JaneSmith1', createdAt: '2026-05-12' },
+        { _id: 'n4', title: 'SQL vs NoSQL notes', content: 'MongoDB fits flexible schemas; Postgres handles relational constraints.', creator: 'JaneSmith2', createdAt: '2026-05-14' },
+    ]
+
+
+    // fetch users and notes from backend
+
+    const fetchDashboardData = async () => {
+    try {
+        // Fires both network requests in parallel
+        const [usersRes, notesRes] = await Promise.all([
+            authApi.get('/all-users'),
+            authApi.get('/all-notes')
         ]);
 
-        setNotesList([
-            { _id: 'n1', title: 'Deployment Guide', content: 'Configure production reverse proxy using Nginx architecture.', creator: 'AbhisekKC', createdAt: '2026-01-20' },
-            { _id: 'n5', title: 'Gym Routine', content: 'Sunday:-Chesday, Monday:-Backday, Tuesday:-legday and Repeat', creator: 'AbhisekKC', createdAt: '2026-10-21' },
-            { _id: 'n6', title: 'Todo list for my NoteAPP', content: ' 1. add google auth done.,2. profile section done.,3. Add features page done.,4. Add about page done.,5. Project already pushed to Github done.,6. Clickon nav link to take you to at the top of that page. same thing for edit note button , should take me to the edit section.,7. also the note content section starts clipping if its too long , make it expand if needed done.,8. Add a 404 page done.,9. learn how to push changes to github., 10. Added a mock admin panel for others users to see ,the mock data is only testing and has not been connected to the backend. Done., 11.Just deploy this version of this app for others to test and see.',creator:'AbhisekKC', createdAt: '2026-10-21' },
-            
-            { _id: 'n2', title: 'Shopping List', content: 'Buy whey protein, oats, peanut butter, and chicken breast.', creator: 'JohnDoe', createdAt: '2026-03-25' },
-            { _id: 'n3', title: 'MERN State Management', content: 'Use Redux Toolkit or Context API for simple global structures.', creator: 'JaneSmith1', createdAt: '2026-05-12' },
-            { _id: 'n4', title: 'SQL vs NoSQL notes', content: 'MongoDB fits flexible schemas; Postgres handles relational constraints.', creator: 'JaneSmith2', createdAt: '2026-05-14' },
-        ])
-        
-        setMetrics({ totalUsers:5, totalNotes:6, activeAdminCount: 1 });
-        const timer = setTimeout(() => setIsLoading(false), 700);
+        // Process users data
+        if (usersRes.data.success) {
+            console.log('Fetched users:', usersRes.data.users);
+            // Merge mock users with fetched users, ensuring no duplicates based on _id
+            const mergedUsers = [...mockUsers, ...usersRes.data.users];
+            setUsersList(mergedUsers);
+        }
+
+        // Process notes data
+        if (notesRes.data.success) {
+            console.log('Fetched notes:', notesRes.data.notes);
+            // Merge mock notes with fetched notes, ensuring no duplicates based on _id
+            const mergedNotes = [...mockNotes, ...notesRes.data.notes];
+            setNotesList(mergedNotes);
+        }
+    } 
+    catch (error) {
+        console.error('Error fetching dashboard data:', error);
+        // Tip: You can set an error state here to show a UI alert to the user
+    }
+};
+
+
+    const setMetricsFromData = (users, notes) => {
+        let totalAdmins = users.filter(user => user.role === 'admin').length;
+        let totalUsers = users.length;
+        let totalNotes = notes.length;
+        console.log('Metrics calculated:', { totalUsers, totalNotes, totalAdmins });
+        setMetrics({ totalUsers: totalUsers, totalNotes: totalNotes, activeAdminCount: totalAdmins });
+
+    }
+
+
+    //useEffect to fetch data from backend
+    useEffect(() => {
+        fetchDashboardData();
+
+        const timer = setTimeout(() => setIsLoading(false), 1000);
         return () => clearTimeout(timer);
     }, [])
-    
-    // to handle role change
-    const handleRoleToggle = (userId, currentRole, userName) => {
-        const nextRole = currentRole === 'admin' ? 'user' : 'admin';
-        if (window.confirm(`Are you sure you want to make ${userName} into ${nextRole} ?`)) {
+
+    useEffect(() => {
+        if (usersList.length > 0 || notesList.length > 0) {
+            setMetricsFromData(usersList, notesList);
+        }
+    }, [usersList, notesList]);
+
+
+
+
+    // to handle verify change
+    const handleVerifyToggle = (userId, isVerified, userName) => {
+        const nextVerified = !isVerified;
+        if (window.confirm(`Are you sure you want to ${nextVerified ? 'verify' : 'unverify'} ${userName} ?`)) {
 
 
             // 1. Update the user list
-            setUsersList(prev => prev.map(u => u._id === userId ? { ...u, role: nextRole } : u));
+            setUsersList(prev => prev.map(u => u._id === userId ? { ...u, isVerified: nextVerified } : u));
 
-            // 2. Dynamically adjust the activeAdminCount metric
-            setMetrics(prev => ({
-                ...prev,
-                activeAdminCount: nextRole === 'admin' ? prev.activeAdminCount + 1 : prev.activeAdminCount - 1
-            }));
 
-            toast.success(`User access configuration updated to ${nextRole}!`);
+
+            toast.success(`User has been ${nextVerified ? 'verified' : 'unverified'}!`);
 
         }
 
     }
+
 
     //handles eliminating a user profile record from state
     const handleDeleteUser = (userId, userRole, userName) => {
@@ -77,7 +129,7 @@ export default function AdminDashboard() {
                     totalUsers: prev.totalUsers - 1,
                     activeAdminCount: userRole === 'admin' ? prev.activeAdminCount - 1 : prev.activeAdminCount
                 }))
-            toast.error('User profile deleted successfully');
+            toast.error('User profile and their data have been deleted successfully');
 
 
         }
@@ -114,7 +166,7 @@ export default function AdminDashboard() {
     //handles injecting a new mock user profile into the state
     const handleAddUserSubmit = (e) => {
         e.preventDefault()
-        if (!newUserData.username || !newUserData.email) {
+        if (!newUserData.username || !newUserData.email || !newUserData.password) {
             toast.error('Please fill out all mandatory identity metrics fields.')
             return;
         }
@@ -123,7 +175,9 @@ export default function AdminDashboard() {
             _id: Date.now().toString(),
             username: newUserData.username,
             email: newUserData.email,
+            password: newUserData.password,
             role: newUserData.role,
+            isVerified: true,
             createdAt: new Date().toISOString().split('T')[0]
         }
         setUsersList(prev => [...prev, newUser])
@@ -135,27 +189,27 @@ export default function AdminDashboard() {
             }))
         toast.success(`New profile verified for ${newUser.username}!`);
         setIsAddModalOpen(false)
-        setNewUserData({ username: '', email: '', role: 'user' });
+        setNewUserData({ username: '', email: '', password: '', role: 'user' });
 
     }
 
     //handling Notes section
-    const handleDeleteNote = (noteId , noteTitle) =>{
-        if(window.confirm(`Are you sure you want to moderate and delete this note: ${noteTitle}`)){
-            setNotesList(prev => prev.filter(n=> n._id !== noteId));
+    const handleDeleteNote = (noteId, noteTitle) => {
+        if (window.confirm(`Are you sure you want to moderate and delete this note: ${noteTitle}`)) {
+            setNotesList(prev => prev.filter(n => n._id !== noteId));
 
-            setMetrics(prev =>({
+            setMetrics(prev => ({
                 ...prev,
-                totalNotes: prev.totalNotes-1
+                totalNotes: prev.totalNotes - 1
             }))
             toast.error('Note deleted successfully!!')
         }
     }
     // search filter for notes
-    const filteredNotes = notesList.filter( note =>
-        note.title.toLowerCase().includes(noteSearchQuery.toLowerCase())||
-        note.content.toLowerCase().includes(noteSearchQuery.toLowerCase())||
-        note.creator.toLowerCase().includes(noteSearchQuery.toLowerCase())
+    const filteredNotes = notesList.filter(note =>
+        note.title.toLowerCase().includes(noteSearchQuery.toLowerCase()) ||
+        note.content.toLowerCase().includes(noteSearchQuery.toLowerCase()) 
+        
     )
 
 
@@ -170,7 +224,7 @@ export default function AdminDashboard() {
                     <div>
                         <h1 className='text-3xl font-bold text-slate-800 tracking-tight'>Admin Panel.</h1>
                         <p className='text-sm text-slate-500'>Monitor MERN stack metrics data and manage system control access parameters.</p>
-                        <p className='text-sm text-slate-500'>This is a mock Admin Panel for others users to interact with so they can see how it works, only Admin level users are allowed access to the data in the database.</p>
+                        <p className='text-sm text-slate-500'>This is a mock Admin Panel for others users to interact with so they can see how it works, only Admin level users are allowed to change the data in the database.</p>
                     </div>
                 </div>
 
@@ -240,24 +294,41 @@ export default function AdminDashboard() {
                                                         <td className='p-4 font-medium text-slate-900'>{account.username}</td>
                                                         <td className='p-4 text-slate-600'>{account.email}</td>
                                                         <td className='p-4'>
-                                                            <span className={`inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold tracking-wide ${account.role === 'admin' ? 'bg-red-100 text-red-700' : 'bg-slate-100 text-slate-700'}`}>
-                                                                {account.role}
-                                                            </span>
-                                                        </td>
-                                                        <td className='p-4 text-center'>
-                                                            <div className='inline-flex items-center justify-center gap-3 w-full'>
-                                                                {/* Role Toggle Button */}
-                                                                <Button
-                                                                    onClick={() => handleRoleToggle(account._id, account.role, account.username)}
+                                                            <div
+                                                                    
                                                                     className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer bg-white ${account.role === 'admin'
-                                                                        ? 'border-slate-300 text-slate-700 hover:bg-slate-100'
-                                                                        : 'border-red-200 text-red-600 hover:bg-red-50'
+                                                                        ? 'border-red-200 text-red-600 hover:bg-red-50' 
+                                                                        :'border-slate-300 text-slate-700 hover:bg-slate-100' 
                                                                         }`}
                                                                 >
                                                                     <ShieldCheck className='h-3.5 w-3.5' />
-                                                                    {account.role === 'admin' ? 'Demote User' : 'Make Admin'}
-                                                                </Button>
+                                                                    {account.role === 'admin' ? 'Admin' : 'User'}
+                                                                </div>
+                                                        </td>
+                                                        <td className='p-4 text-center'>
+                                                            <div className='inline-flex items-center justify-center gap-3 w-full'>
+                                                                {/* Role Toggle Button 
+                                                                <Button
+                                                                    onClick={() => handleRoleToggle(account._id, account.role, account.username)}
+                                                                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer bg-white ${account.role === 'admin'
+                                                                        ? 'border-red-200 text-red-600 hover:bg-red-50' 
+                                                                        :'border-slate-300 text-slate-700 hover:bg-slate-100' 
+                                                                        }`}
+                                                                >
+                                                                    <ShieldCheck className='h-3.5 w-3.5' />
+                                                                    {account.role === 'admin' ? 'Admin' : 'User'}
+                                                                </Button> */}
+                                                                {/* Verify Button */}
+                                                                <Button
+                                                                    onClick={() => handleVerifyToggle(account._id, account.isVerified, account.username)}
+                                                                    className='gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border border-green-200 hover:bg-green-50 transition-all bg-white cursor-pointer'>
 
+                                                                    {account.isVerified ?
+                                                                        <div className='inline-flex items-center gap-1.5 text-green-600'><ShieldCheck className='h-3.5 w-3.5' /> Verified </div>
+                                                                        :
+                                                                        <div className='inline-flex items-center gap-1.5 text-red-600'><ShieldAlert className='h-3.5 w-3.5' /> Verify</div>}
+
+                                                                </Button>
                                                                 {/* Update Button */}
                                                                 <Button
                                                                     onClick={() => {
@@ -266,11 +337,6 @@ export default function AdminDashboard() {
                                                                             editAreaRef.current?.focus()
                                                                         }, 100);
                                                                     }}
-
-
-
-
-
                                                                     className='inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border border-amber-200 text-amber-600 hover:bg-amber-50 bg-white transition-all cursor-pointer'
                                                                 >
                                                                     <Pen className='h-3.5 w-3.5' />
@@ -348,6 +414,19 @@ export default function AdminDashboard() {
                                                     className='w-full px-3.5 py-2 border border-slate-200 rounded-lg text-sm text-slate-800 focus:outline-hidden focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 bg-slate-50/50'
                                                 />
                                             </div>
+                                            {/* Password Field */}
+                                            <div className='space-y-1'>
+                                                <label className='text-xs font-bold text-slate-600 uppercase tracking-wider'>Password</label>
+                                                <Input
+                                                    type='password'
+                                                    required
+                                                    placeholder='e.g. something something'
+                                                    value={newUserData.password}
+                                                    onChange={(e) => setNewUserData(prev => ({ ...prev, password: e.target.value }))}
+                                                    className='w-full px-3.5 py-2 border border-slate-200 rounded-lg text-sm text-slate-800 focus:outline-hidden focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 bg-slate-50/50'
+                                                />
+                                            </div>
+
 
                                             {/* Role Dropdown */}
                                             <div className='space-y-1'>
@@ -392,7 +471,7 @@ export default function AdminDashboard() {
                             )
                         }
 
-                        {/* Updat User Model dialog wrapper */}
+                        {/* Update User Model dialog wrapper */}
 
                         {
                             editingUser && (
@@ -439,12 +518,12 @@ export default function AdminDashboard() {
                                 </div>
                             )
                         }
-                       
-                        
+
+
 
                     </div>
                 )}
-                  {/*Notes panel   */}
+                {/*Notes panel   */}
                 <div className='space-y-6 p-4 border-2 border-slate-200 shadow-xl rounded-xl'>
                     <div className='flex flex-col  sm:flex-row sm:items-center sm:justify-between gap-4'>
                         <h1 className='text-xl font-bold text-slate-800 flex items-center gap-2'>
@@ -454,15 +533,20 @@ export default function AdminDashboard() {
                         <div className='relative w-full max-w-xs bg-white flex items-center rounded-lg shadow-2xs'>
                             <Search className='absolute left-3 h-4 w-4 text-slate-400' />
                             <Input type='text'
-                                   placeholder='Search notes data...'
-                                   value={noteSearchQuery}
-                                   onChange={(e)=>setNoteSearchQuery(e.target.value)}
-                                   className='pl-9 w-full border border-slate-200 rounded-lg'/>
+                                placeholder='Search notes via title or the content...'
+                                value={noteSearchQuery}
+                                onChange={(e) => setNoteSearchQuery(e.target.value)}
+                                className='pl-9 w-full border border-slate-200 rounded-lg' />
                         </div>
 
                     </div>
                     {/* Notes table */}
-                    <div className='bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden'>
+                    {isLoading ? 
+                    (<div className='flex-1 w-full flex items-center justify-center min-h-100'>
+                        <Loader2 className='h-10 w-10 animate-spin text-slate-600' />
+                    </div>)
+                    : 
+                    (<div className='bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden'>
                         <div className='overflow-x-auto'>
                             <table className='w-full text-left border-collapse text-sm'>
                                 <thead>
@@ -475,37 +559,42 @@ export default function AdminDashboard() {
                                 </thead>
                                 <tbody className='bg-linear-to-l from-green-200 to-white'>
                                     {
-                                        filteredNotes.length === 0? 
-                                        (
-                                            <tr className='border-b border-slate-100 last:border-0 '>
-                                                <td className='p-4 font-semibold w-full'>
-                                                    No systematic notes match your search filter??? or no Notes in the cloud yet.
-                                                </td>
+                                        filteredNotes.length === 0 ?
+                                            (
+                                                <tr className='border-b border-slate-100 last:border-0 '>
+                                                    <td className='p-4 font-semibold w-full'>
+                                                        No systematic notes match your search filter??? or no Notes in the cloud yet.
+                                                    </td>
 
-                                            </tr>
-                                        )
-                                        :
-                                        ( filteredNotes.map((note) =>(
-                                            <tr key={note._id}
-                                                className='hover:bg-slate-50/70 transition-colors border-b border-slate-100 last:border-0 align-top'
+                                                </tr>
+                                            )
+                                            :
+                                            (filteredNotes.map((note) => (
+                                                <tr key={note._id}
+                                                    className='hover:bg-slate-50/70 transition-colors border-b border-slate-100 last:border-0 align-top'
                                                 >
-                                                <td className='p-4 font-bold text-slate-900'>{note.title}</td> 
-                                                <td className='p-4 text-slate-600 wrap-break-word max-w-prose whitespace-pre-line'>{note.content}</td>
-                                                <td className='p-4 font-medium text-indigo-600'>@{note.creator}</td>   
-                                                <td className='p-4 text-center'>
-                                                    <Button className='inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-red-100 text-slate-900 hover:text-red-700 hover:bg-white transition-all bg-green-200 cursor-pointer shadow-xs text-xs font-semibold'
-                                                           onClick={()=>handleDeleteNote(note._id , note.title)}
-                                                          >
-                                                        <Trash2 className='h-3.5 w-3.5' />DeleteNote.
-                                                    </Button>
-                                                </td>         
+                                                    <td className='p-4 font-bold text-slate-900'>{note.title}</td>
+                                                    <td className="p-4 text-slate-600 max-w-prose align-top">
+                                                        <div className="max-h-30 overflow-y-auto whitespace-pre-line wrap-break-word pr-1">
+                                                            {note.content}
+                                                        </div>
+                                                    </td>
 
-                                            </tr>
-                                        )
+                                                    <td className='p-4 font-medium text-indigo-600'>@{note.creator}</td>
+                                                    <td className='p-4 text-center'>
+                                                        <Button className='inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-red-100 text-slate-900 hover:text-red-700 hover:bg-white transition-all bg-green-200 cursor-pointer shadow-xs text-xs font-semibold'
+                                                            onClick={() => handleDeleteNote(note._id, note.title)}
+                                                        >
+                                                            <Trash2 className='h-3.5 w-3.5' />DeleteNote.
+                                                        </Button>
+                                                    </td>
 
-                                        )
-                                            
-                                        )
+                                                </tr>
+                                            )
+
+                                            )
+
+                                            )
                                     }
 
                                 </tbody>
@@ -513,8 +602,9 @@ export default function AdminDashboard() {
 
                         </div>
 
-                    </div>
-                  
+                    </div>)}
+                    
+
                 </div>
 
             </div>

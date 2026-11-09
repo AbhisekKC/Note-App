@@ -4,16 +4,15 @@ import React from 'react'
 
 function ProtectedRoute() {
     const {user} = getData()
-   
-  return (
+  
+     return (
     <div>
         {
-
         user ? <Outlet /> : <Navigate to ={'/login'} />
         }
 
     </div>
-  )
+  ) 
 }
 
 export default ProtectedRoute

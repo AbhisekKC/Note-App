@@ -25,19 +25,22 @@ export const googleLogin = async (req, res) =>{
             audience: process.env.GOOGLE_CLIENT_ID
         })
         const payload = ticket.getPayload();
-        const {email , name} = payload; // extract account details
+        const {email , name , picture} = payload; // extract account details
         //2. check if the user already exists in the database
         let user = await User.findOne({email})
         if(!user){
             user = await User.create({
                 username: name,
                 email: email,
+                profilePicture: picture,
                 isLoggedIn: true,
                 isVerified:true, // automatic verification since verified by google
                 lastLogin: new Date(),
+                 
             })
         } else {
             user.isLoggedIn =true;
+            user.profilePicture = picture;
             user.lastLogin = new Date()
             await user.save() 
         }
@@ -55,10 +58,12 @@ export const googleLogin = async (req, res) =>{
             user:{
                 username: user.username,
                 email: user.email,
+                profilePicture: user.profilePicture,
                 isLoggedIn: user.isLoggedIn,
                 isVerified:user.isVerified,
                 lastLogin: user.lastLogin ,
-                createdAt: user.createdAt
+                createdAt: user.createdAt,
+                role: user.role // default role for new users
                 
             }
         })
@@ -125,6 +130,45 @@ export const registerUser = async (req, res) => {
 
     } catch (error) {
         return res.status(500).json({ message: error.message, success: false }); // Changed to 500 for server errors
+    }
+};
+
+// resend verification email
+export const resendVerificationEmail = async (req, res) => {
+    try {
+        const { email } = req.body;
+
+        if (!email) {
+            return res.status(400).json({ message: 'Email is required', success: false });
+        }
+
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found', success: false });
+        }
+
+        if (user.isVerified) {
+            return res.status(400).json({ message: 'Email is already verified', success: false });
+        }
+
+        // Generate a new verification token
+        const token = jwt.sign(
+            { id: user._id },
+            process.env.SECRET_KEY,
+            { expiresIn: '30m' }
+        );
+
+        // Update the user's token
+        user.token = token;
+        await user.save();
+
+        // Send the verification email
+        await verifyMail(token, email);
+
+        return res.status(200).json({ message: 'Verification email sent successfully', success: true });
+
+    } catch (error) {
+        return res.status(500).json({ message: error.message, success: false });
     }
 };
 

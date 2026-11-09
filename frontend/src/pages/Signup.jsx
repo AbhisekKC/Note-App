@@ -44,7 +44,7 @@ function Signup() {
           localStorage.setItem('token', token);
         }
 
-        navigate('/verify');
+        navigate(`/verify`);
       } else {
         // Handle cases where the API returns 200 but success is false
         toast.error(res.data.message || 'Failed to create account.');

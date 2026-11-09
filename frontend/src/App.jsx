@@ -6,6 +6,7 @@ import VerifyEmail from "./pages/VerifyEmail";
 import Verify from "./pages/Verify";
 import ForgotPassword from "./pages/ForgotPassword";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import AdminRoute from "@/components/AdminRoute";
 import VerifyOTP from "./pages/VerifyOTP";
 import ChangePassword from "./pages/ChangePassword";
 import NoteLoader from "./pages/NoteLoader";
@@ -37,12 +38,15 @@ function App() {
               <Route path='/profile' element={<Profile/>}/>
               <Route path='/admin' element={<AdminDashboard/>} />
             </Route>
+            {/* ADMIN ROUTES: Only admins can access these endpoints */}
+            <Route element={<AdminRoute />}>
+              
+            </Route>
 
             {/* PUBLIC ROUTES: Anyone can view these pages anytime */}
             <Route path="/" element={<Home />} />
             <Route path="/features" element={<Features/>} />
             <Route path='/about' element={<About/>} />
-
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
             <Route path='/forgot-password' element={<ForgotPassword />} />

@@ -48,6 +48,7 @@ const About = () => {
           Your thoughts are private, and they should stay that way. Our ecosystem implements cryptographically strong password hashing using bcrypt, industry-standard JSON Web Tokens (JWT) for session management, end-to-end email validations, rapid OTP recoveries, and frictionless OAuth integrations with Google.
         </p>
 
+
         <h2 className="text-2xl font-bold text-green-600 mt-8 mb-4">
           Tech Stack & API Integrations.
         </h2>
@@ -58,6 +59,7 @@ const About = () => {
           <li><strong className="text-gray-900">React & Tailwind CSS:</strong> A dynamic, highly componentized web application framework.</li>
           <li><strong className="text-gray-900">Nodemailer & Google OAuth2:</strong> Services running backend automation for seamless user lifecycle management.</li>
           <li><strong className="text-gray-900">OpenWeatherMap REST API:</strong> Integrated external microservices fetching live regional atmospheric variables using coordinated Axios geolocation requests.</li>
+          <li><strong className="text-gray-900">Google Gemini AI:</strong> Advanced natural language processing for note summarization and insights.</li>
         </ul>
       </div>
     </div>

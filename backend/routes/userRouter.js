@@ -1,5 +1,5 @@
 import express from 'express'
-import { googleLogin, registerUser , verifyUser , loginUser, logoutUser ,forgotPassword , verifyOtp , changePassword } from '../controller/userController.js'
+import { googleLogin, registerUser, resendVerificationEmail , verifyUser , loginUser, logoutUser ,forgotPassword , verifyOtp , changePassword } from '../controller/userController.js'
 import {isAuthenticated} from '../middlewares/isAuthenticated.js' 
 import { userSchema , validateUser } from '../validators/userValidators.js'
 
@@ -8,6 +8,8 @@ const router = express.Router()
 router.post('/google-login' , googleLogin)
 
 router.post('/register', validateUser(userSchema) , registerUser)
+
+router.post('/resend-verification-email', resendVerificationEmail)
 
 router.post('/verify', verifyUser)
 

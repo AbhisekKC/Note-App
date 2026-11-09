@@ -48,7 +48,7 @@ function Hero() {
                         <div className='space-y-2'>
                             <Badge variant='primary' className='mb-4 text-green-800 border-green-200'>
                                 <Zap className='w-3 h-3 mr-1'/>
-                                New: Note organization with Cloud save..
+                                New: AI powered Note organization with Cloud save..
                             </Badge>
                             <h1 className='text-green-600 text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl'>
                                 Your thoughts, organized and accessible

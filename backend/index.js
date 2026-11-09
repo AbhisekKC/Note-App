@@ -4,6 +4,8 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import userRoute from './routes/userRouter.js';
 import noteRoute from './routes/noteRouter.js'
+import adminRoute from './routes/adminRouter.js'
+import aiRoute from './routes/aiRoutes.js'
 import cors from 'cors'
 
 
@@ -43,6 +45,8 @@ mongoose.connect(url)
 
 app.use('/user' , userRoute)
 app.use('/user/note', noteRoute )
+app.use('/admin', adminRoute)
+app.use('/ai', aiRoute)
 
 
 

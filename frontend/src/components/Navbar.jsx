@@ -32,6 +32,7 @@ function Navbar() {
         if(user?.email) {
             return user.email.charAt(0).toUpperCase();
         }
+        
     }
 
     const logoutHandler = async () => {
@@ -68,11 +69,11 @@ function Navbar() {
                             <Link to="/" className='hover:text-green-600 transition-colors cursor-pointer hover:underline'>🏚️Home</Link>
                         </li>
                         <li className='hover:text-green-600 transition-colors cursor-pointer'>
-                            <Link to="/features" className='hover:text-green-600 transition-colors cursor-pointer hover:underline'>Features</Link>
+                            <Link to="/features" className='hover:text-green-600 transition-colors cursor-pointer hover:underline'>🪶Features</Link>
                         </li>
                         
                         <li className='hover:text-green-600 transition-colors cursor-pointer hover:underline'>
-                            <Link to="/about" className='hover:text-green-600 transition-colors'>About</Link>
+                            <Link to="/about" className='hover:text-green-600 transition-colors'>❓About</Link>
                         </li>
                         
                         {user ? (
@@ -80,7 +81,7 @@ function Navbar() {
                                 <DropdownMenu>
                                     <DropdownMenuTrigger className="relative h-10 w-10 rounded-full cursor-pointer focus:outline-none flex items-center justify-center hover:bg-slate-50 transition-colors select-none">
                                         <Avatar className="h-10 w-10 pointer-events-none">
-                                            <AvatarImage src="https://github.com" alt="Profile" />
+                                            <AvatarImage src={user?.profilePicture} alt="Profile" />
                                             <AvatarFallback className='bg-green-600 text-white font-semibold text-sm uppercase select-none pointer-events-none'>
                                                {getUserInitials()}
                                             </AvatarFallback>

@@ -23,6 +23,10 @@ function Features() {
         {
             title:'System Administration & Access Control Panel',
             description:'A robust, centralized control center built to monitor real-time MERN stack application metrics and securely manage global user authentication paradigms. This dashboard serves as the administrative core for overriding user states and defending platform architecture parameters.'
+        },
+        {
+            title:'AI-Powered Note Summarization',
+            description:'Leverage the power of AI to generate concise summaries of your notes. Our integrated AI assistant uses advanced natural language processing to distill key points, making it easier to review and share information.'
         }
     ]
 

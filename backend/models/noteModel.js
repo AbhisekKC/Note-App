@@ -17,6 +17,18 @@ const noteSchema = new mongoose.Schema(
             ref: 'User', // Matches the exact string name of your User model
             required: true,
         },
+        creator: {
+            type: String,
+            trim:true,
+            required: false,
+        },
+        summary:{
+            type: String,
+            default: " ",//new field for saved summaries
+        },
+        tags:[{type: String }]// new array field for auto-generated tags
+
+        
     },
     { 
         timestamps: true // Automatically creates 'createdAt' and 'updatedAt' fields
