@@ -53,11 +53,11 @@ function Navbar() {
     }
 
     return (
-        <nav className='fixed top-0 left-0 w-full px-4 py-3 border-b border-gray-300 z-50 backdrop-blur-sm '>
+        <nav className='fixed top-0 left-0 w-full px-4 py-3  z-50 backdrop-blur-sm '>
 
             <div className="max-w-7xl mx-auto px-1 sm:px-4">
                 {/* Stacks vertically on mobile (flex-col), side-by-side on larger screens (sm:flex-row) */}
-                <div className="flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-0 sm:h-12">
+                <div className="flex flex-col sm:flex-row  justify-between items-center gap-3 sm:gap-0 sm:h-12">
 
                     {/* Top Row on Mobile: Logo Section */}
                     <Link

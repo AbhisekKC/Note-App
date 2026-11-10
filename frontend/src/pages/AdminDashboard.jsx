@@ -215,11 +215,11 @@ export default function AdminDashboard() {
 
 
     return (
-        <div className='w-full min-h-screen flex-1 flex flex-col p-6 bg-slate-100'>
+        <div className='w-full min-h-screen flex-1 flex flex-col p-6  bg-slate-100'>
             <div className='max-w-6xl w-full mx-auto space-y-6'>
 
                 {/* Header Block Control Matrix */}
-                <div className='flex items-center gap-3 border-b bg-linear-to-l from-green-200 to-white p-4'>
+                <div className='flex items-center gap-3 rounded-xl border-b bg-linear-to-l from-green-200 to-white p-4'>
                     <ShieldAlert className='h-8 w-8 text-indigo-600 shrink-0' />
                     <div>
                         <h1 className='text-3xl font-bold text-slate-800 tracking-tight'>Admin Panel.</h1>
@@ -307,17 +307,7 @@ export default function AdminDashboard() {
                                                         </td>
                                                         <td className='p-4 text-center'>
                                                             <div className='inline-flex items-center justify-center gap-3 w-full'>
-                                                                {/* Role Toggle Button 
-                                                                <Button
-                                                                    onClick={() => handleRoleToggle(account._id, account.role, account.username)}
-                                                                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer bg-white ${account.role === 'admin'
-                                                                        ? 'border-red-200 text-red-600 hover:bg-red-50' 
-                                                                        :'border-slate-300 text-slate-700 hover:bg-slate-100' 
-                                                                        }`}
-                                                                >
-                                                                    <ShieldCheck className='h-3.5 w-3.5' />
-                                                                    {account.role === 'admin' ? 'Admin' : 'User'}
-                                                                </Button> */}
+                                                                
                                                                 {/* Verify Button */}
                                                                 <Button
                                                                     onClick={() => handleVerifyToggle(account._id, account.isVerified, account.username)}
@@ -580,7 +570,7 @@ export default function AdminDashboard() {
                                                         </div>
                                                     </td>
 
-                                                    <td className='p-4 font-medium text-indigo-600'>@{note.creator}</td>
+                                                    <td className='p-4 font-medium text-green-600'>@{note.creator}</td>
                                                     <td className='p-4 text-center'>
                                                         <Button className='inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-red-100 text-slate-900 hover:text-red-700 hover:bg-white transition-all bg-green-200 cursor-pointer shadow-xs text-xs font-semibold'
                                                             onClick={() => handleDeleteNote(note._id, note.title)}

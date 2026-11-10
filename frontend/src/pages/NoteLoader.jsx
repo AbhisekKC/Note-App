@@ -135,9 +135,9 @@ function NoteLoader() {
 
 
     return (
-        <div className="bg-linear-to-l from-green-200 to-white min-h-screen w-full p-4 md:p-8 ">
-            <div className='flex flex-row justify-between border-b border-green-200 pb-4'>
-                <h1 className='text-2xl md:text-3xl  font-bold flex  items-center justify-center gap-4 p-2 mb-7'>
+        <div className="bg-linear-to-l from-green-200 to-white min-h-screen w-full p-5 md:p-5 ">
+            <div className='flex flex-row justify-between border-b border-green-200 py-4'>
+                <h1 className='text-2xl md:text-3xl  font-bold flex  items-center justify-center gap-4 p-2 '>
                     <BookA className='text-green-600  h-10 w-10 shrink-0' /> <span>Start taking Notes.....
                         <Button className='bg-emerald-600 hover:bg-emerald-700 text-white flex items-center '
 
@@ -257,7 +257,7 @@ function NoteLoader() {
                                 ([...filteredNotes]
                                     .sort((a,b)=> new Date(b.updatedAt) - new Date(a.updatedAt))
                                     .map(n => (
-                                    <div key={n._id || n.id} className='bg-white border border-slate-200 rounded-xl p-4 pr-6 shadow-sm flex flex-col justify-between min-h-40'>
+                                    <div key={n._id || n.id} className='bg-white border border-slate-200 rounded-xl p-4 pr-6 shadow-sm flex flex-col justify-between '>
                                         <div>
                                             {/* ✨ Updated Title (h2) */}
                                             <h2 className='text-lg font-bold text-slate-900 tracking-tight leading-snug line-clamp-2'>
