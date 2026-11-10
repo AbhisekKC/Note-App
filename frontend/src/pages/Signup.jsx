@@ -33,10 +33,11 @@ function Signup() {
           'Content-Type': 'application/json'
         }
       });
-
+      const email = formData.email
+      localStorage.setItem('email' , email);
       // Handle server-side success flags gracefully
       if (res.data.success) {
-        toast.success('Account created successfully! Please log in.');
+        toast.success('Account created successfully! Please take some time to Verify!');
         
         // Safely extract and save token if present
         const token = res.data.token;

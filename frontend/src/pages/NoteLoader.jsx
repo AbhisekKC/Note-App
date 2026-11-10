@@ -254,7 +254,9 @@ function NoteLoader() {
                                     </Button>
                                 </h1>
                                 :
-                                (filteredNotes.map(n => (
+                                ([...filteredNotes]
+                                    .sort((a,b)=> new Date(b.updatedAt) - new Date(a.updatedAt))
+                                    .map(n => (
                                     <div key={n._id || n.id} className='bg-white border border-slate-200 rounded-xl p-4 pr-6 shadow-sm flex flex-col justify-between min-h-40'>
                                         <div>
                                             {/* ✨ Updated Title (h2) */}

@@ -33,7 +33,7 @@ function Hero() {
     return (
         <div className='relative w-full md:h-175 min-h-screen bg-linear-to-l from-green-200 to-white overflow-hidden'>
             
-            <section className='w-full py-2 md:py-10 lg:py-10 xl:py-10'>
+            <section className='w-full py-15 md:py-10 lg:py-10 xl:py-10'>
                 <div className='max-w-7xl mx-auto px-4 md:px-6'>
                     <div className='flex flex-col items-center space-y-1 text-center '>
                         
