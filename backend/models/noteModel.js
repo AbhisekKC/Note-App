@@ -24,9 +24,9 @@ const noteSchema = new mongoose.Schema(
         },
         summary:{
             type: String,
-            default: " ",//new field for saved summaries
+            default: '',//new field for saved summaries
         },
-        tags:[{type: String }]// new array field for auto-generated tags
+        tags:[{type: [String], default:[] }]// new array field for auto-generated tags
 
         
     },

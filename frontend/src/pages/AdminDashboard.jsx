@@ -4,12 +4,14 @@ import { Loader2, ShieldAlert, Users, BookOpen, Activity, ShieldCheck, UserPlus,
 import React, { useState, useEffect, useRef } from 'react'
 import { toast } from 'sonner'
 import { authApi } from '@/api/axios'
+import AdminSkeleton from '@/components/AdminSkeleton'
 
 export default function AdminDashboard() {
     const [metrics, setMetrics] = useState({ totalUsers: 0, totalNotes: 0, activeAdminCount: 1 })
     const [usersList, setUsersList] = useState([])
     const [notesList, setNotesList] = useState([])
     const [noteSearchQuery, setNoteSearchQuery] = useState('')
+    const [userSearchQuery, setUserSearchQuery] = useState('')
     const [isLoading, setIsLoading] = useState(true)
 
     //update states for user
@@ -43,34 +45,34 @@ export default function AdminDashboard() {
     // fetch users and notes from backend
 
     const fetchDashboardData = async () => {
-    try {
-        // Fires both network requests in parallel
-        const [usersRes, notesRes] = await Promise.all([
-            authApi.get('/all-users'),
-            authApi.get('/all-notes')
-        ]);
+        try {
+            // Fires both network requests in parallel
+            const [usersRes, notesRes] = await Promise.all([
+                authApi.get('/all-users'),
+                authApi.get('/all-notes')
+            ]);
 
-        // Process users data
-        if (usersRes.data.success) {
-            console.log('Fetched users:', usersRes.data.users);
-            // Merge mock users with fetched users, ensuring no duplicates based on _id
-            const mergedUsers = [...mockUsers, ...usersRes.data.users];
-            setUsersList(mergedUsers);
-        }
+            // Process users data
+            if (usersRes.data.success) {
+                console.log('Fetched users:', usersRes.data.users);
+                // Merge mock users with fetched users, ensuring no duplicates based on _id
+                const mergedUsers = [...mockUsers, ...usersRes.data.users];
+                setUsersList(mergedUsers);
+            }
 
-        // Process notes data
-        if (notesRes.data.success) {
-            console.log('Fetched notes:', notesRes.data.notes);
-            // Merge mock notes with fetched notes, ensuring no duplicates based on _id
-            const mergedNotes = [...mockNotes, ...notesRes.data.notes];
-            setNotesList(mergedNotes);
+            // Process notes data
+            if (notesRes.data.success) {
+                console.log('Fetched notes:', notesRes.data.notes);
+                // Merge mock notes with fetched notes, ensuring no duplicates based on _id
+                const mergedNotes = [...mockNotes, ...notesRes.data.notes];
+                setNotesList(mergedNotes);
+            }
         }
-    } 
-    catch (error) {
-        console.error('Error fetching dashboard data:', error);
-        // Tip: You can set an error state here to show a UI alert to the user
-    }
-};
+        catch (error) {
+            console.error('Error fetching dashboard data:', error);
+            // Tip: You can set an error state here to show a UI alert to the user
+        }
+    };
 
 
     const setMetricsFromData = (users, notes) => {
@@ -208,8 +210,14 @@ export default function AdminDashboard() {
     // search filter for notes
     const filteredNotes = notesList.filter(note =>
         note.title.toLowerCase().includes(noteSearchQuery.toLowerCase()) ||
-        note.content.toLowerCase().includes(noteSearchQuery.toLowerCase()) 
-        
+        note.content.toLowerCase().includes(noteSearchQuery.toLowerCase())
+
+    )
+
+    //search filter for users
+    const filteredUsers = usersList.filter(user =>
+        user.username.toLowerCase().includes(userSearchQuery.toLowerCase())||
+        user.email.toLowerCase().includes(userSearchQuery.toLowerCase())
     )
 
 
@@ -232,7 +240,7 @@ export default function AdminDashboard() {
                 {/* Data Cards Layer Grid */}
                 {isLoading ? (
                     <div className='flex-1 w-full flex items-center justify-center min-h-100'>
-                        <Loader2 className='h-10 w-10 animate-spin text-slate-600' />
+                        <AdminSkeleton />
                     </div>
                 ) : (
                     <div className='max-w-6xl w-full mx-auto space-y-6'>
@@ -266,8 +274,17 @@ export default function AdminDashboard() {
 
                         {/* User Management System Table */}
                         <div className='bg-linear-to-l from-green-200 to-white rounded-xl shadow-sm border border-slate-200 overflow-hidden'>
-                            <div className='p-5 border-b border-slate-100 bg-slate-50/50'>
+                            <div className='p-5 flex justify-between border-b border-slate-100 bg-slate-50/50'>
                                 <h3 className='font-bold text-slate-800 text-lg'>System User Registry!</h3>
+                                {/* search bar real-time */}
+                                <div className='relative w-full max-w-xs bg-white flex items-center rounded-lg shadow-2xs'>
+                                    <Search className='absolute left-3 h-4 w-4 text-slate-400' />
+                                    <Input type='text'
+                                        placeholder='Search users via name or email...'
+                                        value={userSearchQuery}
+                                        onChange={(e) => setUserSearchQuery(e.target.value)}
+                                        className='pl-9 w-full border border-slate-200 rounded-lg' />
+                                </div>
                             </div>
                             <div className='overflow-x-auto'>
                                 <table className='w-full text-left border-collapse text-sm'>
@@ -281,7 +298,7 @@ export default function AdminDashboard() {
                                     </thead>
                                     <tbody>
 
-                                        {usersList.length === 0 ?
+                                        {filteredUsers.length === 0 ?
                                             (<tr className='hover:bg-slate-50/70 transition-colors border-b border-slate-100 last:border-0'>
                                                 <td colSpan='4' className='p-4 font-medium text-slate-900'>
                                                     No registered database users exist currently.
@@ -289,61 +306,63 @@ export default function AdminDashboard() {
                                             </tr>)
                                             :
                                             (
-                                                usersList.map((account) => (
-                                                    <tr key={account._id} className='hover:bg-slate-50/70 transition-colors border-b border-slate-100 last:border-0'>
-                                                        <td className='p-4 font-medium text-slate-900'>{account.username}</td>
-                                                        <td className='p-4 text-slate-600'>{account.email}</td>
-                                                        <td className='p-4'>
-                                                            <div
-                                                                    
+                                                [...filteredUsers]
+                                                    .sort((a, b) => a.username.localeCompare(b.username, undefined, { sensitvity: 'base' }))
+                                                    .map((account) => (
+                                                        <tr key={account._id} className='hover:bg-slate-50/70 transition-colors border-b border-slate-100 last:border-0'>
+                                                            <td className='p-4 font-medium text-slate-900'>{account.username}</td>
+                                                            <td className='p-4 text-slate-600'>{account.email}</td>
+                                                            <td className='p-4'>
+                                                                <div
+
                                                                     className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer bg-white ${account.role === 'admin'
-                                                                        ? 'border-red-200 text-red-600 hover:bg-red-50' 
-                                                                        :'border-slate-300 text-slate-700 hover:bg-slate-100' 
+                                                                        ? 'border-red-200 text-red-600 hover:bg-red-50'
+                                                                        : 'border-slate-300 text-slate-700 hover:bg-slate-100'
                                                                         }`}
                                                                 >
                                                                     <ShieldCheck className='h-3.5 w-3.5' />
                                                                     {account.role === 'admin' ? 'Admin' : 'User'}
                                                                 </div>
-                                                        </td>
-                                                        <td className='p-4 text-center'>
-                                                            <div className='inline-flex items-center justify-center gap-3 w-full'>
-                                                                
-                                                                {/* Verify Button */}
-                                                                <Button
-                                                                    onClick={() => handleVerifyToggle(account._id, account.isVerified, account.username)}
-                                                                    className='gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border border-green-200 hover:bg-green-50 transition-all bg-white cursor-pointer'>
+                                                            </td>
+                                                            <td className='p-4 text-center'>
+                                                                <div className='inline-flex items-center justify-center gap-3 w-full'>
 
-                                                                    {account.isVerified ?
-                                                                        <div className='inline-flex items-center gap-1.5 text-green-600'><ShieldCheck className='h-3.5 w-3.5' /> Verified </div>
-                                                                        :
-                                                                        <div className='inline-flex items-center gap-1.5 text-red-600'><ShieldAlert className='h-3.5 w-3.5' /> Verify</div>}
+                                                                    {/* Verify Button */}
+                                                                    <Button
+                                                                        onClick={() => handleVerifyToggle(account._id, account.isVerified, account.username)}
+                                                                        className='gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border border-green-200 hover:bg-green-50 transition-all bg-white cursor-pointer'>
 
-                                                                </Button>
-                                                                {/* Update Button */}
-                                                                <Button
-                                                                    onClick={() => {
-                                                                        setEditingUser(account);
-                                                                        setTimeout(() => {
-                                                                            editAreaRef.current?.focus()
-                                                                        }, 100);
-                                                                    }}
-                                                                    className='inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border border-amber-200 text-amber-600 hover:bg-amber-50 bg-white transition-all cursor-pointer'
-                                                                >
-                                                                    <Pen className='h-3.5 w-3.5' />
-                                                                </Button>
+                                                                        {account.isVerified ?
+                                                                            <div className='inline-flex items-center gap-1.5 text-green-600'><ShieldCheck className='h-3.5 w-3.5' /> Verified </div>
+                                                                            :
+                                                                            <div className='inline-flex items-center gap-1.5 text-red-600'><ShieldAlert className='h-3.5 w-3.5' /> Verify</div>}
 
-                                                                {/* Delete Button */}
-                                                                <Button
-                                                                    onClick={() => handleDeleteUser(account._id, account.role, account.username)}
-                                                                    className='inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 text-slate-400 hover:text-red-600 hover:bg-red-50 transition-all bg-white cursor-pointer shadow-2xs'
-                                                                >
-                                                                    <Trash2 className='h-4 w-4' />
-                                                                </Button>
-                                                            </div>
-                                                        </td>
+                                                                    </Button>
+                                                                    {/* Update Button */}
+                                                                    <Button
+                                                                        onClick={() => {
+                                                                            setEditingUser(account);
+                                                                            setTimeout(() => {
+                                                                                editAreaRef.current?.focus()
+                                                                            }, 100);
+                                                                        }}
+                                                                        className='inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border border-amber-200 text-amber-600 hover:bg-amber-50 bg-white transition-all cursor-pointer'
+                                                                    >
+                                                                        <Pen className='h-3.5 w-3.5' />
+                                                                    </Button>
 
-                                                    </tr>
-                                                ))
+                                                                    {/* Delete Button */}
+                                                                    <Button
+                                                                        onClick={() => handleDeleteUser(account._id, account.role, account.username)}
+                                                                        className='inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 text-slate-400 hover:text-red-600 hover:bg-red-50 transition-all bg-white cursor-pointer shadow-2xs'
+                                                                    >
+                                                                        <Trash2 className='h-4 w-4' />
+                                                                    </Button>
+                                                                </div>
+                                                            </td>
+
+                                                        </tr>
+                                                    ))
                                             )}
 
                                     </tbody>
@@ -531,12 +550,8 @@ export default function AdminDashboard() {
 
                     </div>
                     {/* Notes table */}
-                    {isLoading ? 
-                    (<div className='flex-1 w-full flex items-center justify-center min-h-100'>
-                        <Loader2 className='h-10 w-10 animate-spin text-slate-600' />
-                    </div>)
-                    : 
-                    (<div className='bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden'>
+
+                    <div className='bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden'>
                         <div className='overflow-x-auto'>
                             <table className='w-full text-left border-collapse text-sm'>
                                 <thead>
@@ -592,8 +607,8 @@ export default function AdminDashboard() {
 
                         </div>
 
-                    </div>)}
-                    
+                    </div>
+
 
                 </div>
 

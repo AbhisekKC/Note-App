@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
 import NoteAiAssistant from '@/components/NoteAiAssistant'
+import NoteSkeleton from '@/components/NoteSkeleton'
 
 function NoteLoader() {
     const [notes, setNotes] = useState([])
@@ -156,19 +157,23 @@ function NoteLoader() {
 
                         onSubmit={handleSubmit}
                         className='w-full  max-w-md bg-white p-4 rounded-xl border border-slate-200 flex flex-col gap-3 shadow-2xl'>
-                        <h2>
+                        <div className='flex flex-row justify-between'>
+                            <h2>
                             {editingId ?
-                                <div className="font-semibold text-xl text-rose-600 flex items-center gap-2">Edit Note.</div> :
+                                <div className="font-semibold text-xl text-slate-800 flex items-center gap-2">Edit Note.</div> :
                                 <div className='font-semibold text-2xl flex items-center gap-2 text-slate-800'><BookOpenCheck /> Create Note.</div>
                             }
+                            
+
+                            </h2>
                             <Button className='bg-rose-600 hover:bg-rose-700 text-white flex items-center gap-2'
 
-                                onClick={() => setNoteModal(false)}
-                            >
+                                onClick={() => setNoteModal(false)}>
+                            
                                 Close <Notebook className='h-10 w-10' />
                             </Button>
-
-                        </h2>
+                        </div>    
+                        
                         <Input
                             type='text'
                             placeholder='Title'
@@ -239,7 +244,7 @@ function NoteLoader() {
 
                     {isLoading ? (
                         <div className="flex justify-center p-12">
-                            <Loader2 className='animate-spin h-8 w-8 text-green-600' />
+                            <NoteSkeleton />
                         </div>
                     ) : (
                         // FIXED: Removed restrictive grid height parameters so elements align fluidly
@@ -255,113 +260,126 @@ function NoteLoader() {
                                 </h1>
                                 :
                                 ([...filteredNotes]
-                                    .sort((a,b)=> new Date(b.updatedAt) - new Date(a.updatedAt))
+                                    .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
                                     .map(n => (
-                                    <div key={n._id || n.id} className='bg-white border border-slate-200 rounded-xl p-4 pr-6 shadow-sm flex flex-col justify-between '>
-                                        <div>
-                                            {/* ✨ Updated Title (h2) */}
-                                            <h2 className='text-lg font-bold text-slate-900 tracking-tight leading-snug line-clamp-2'>
-                                                {n.title}
-                                            </h2>
+                                        <div key={n._id || n.id} className='bg-white border border-slate-200 rounded-xl p-4 pr-6 shadow-sm flex flex-col justify-between '>
+                                            <div>
+                                                {/* ✨ Updated Title (h2) */}
+                                                <h2 className='text-lg font-bold text-slate-900 tracking-tight leading-snug line-clamp-2'>
+                                                    {n.title}
+                                                </h2>
 
-                                            {/* ✨ Updated Content (p) */}
-                                            <p className='text-sm text-slate-600 border rounded-lg border-indigo-100 border-l-4 border-l-green-500 leading-relaxed mt-3 p-3 whitespace-pre-wrap wrap-break-word'>
-                                                <span className='block text-[10px] font-bold uppercase tracking-wider text-green-600 mb-1'>
+                                                {/* ✨ Updated Content (p) */}
+                                                <p className='text-sm text-slate-600 border rounded-lg border-indigo-100 border-l-4 border-l-green-500 leading-relaxed mt-3 p-3 whitespace-pre-wrap wrap-break-word'>
+                                                    <span className='block text-[10px] font-bold uppercase tracking-wider text-green-600 mb-1'>
                                                         ✨ Your notes
                                                     </span>
-                                                {n.content}
-                                            </p>
-                                            {/* ✨ Styled AI Summary Callout Box */}
-                                            {n.summary && n.summary.trim() !== '' && (
-                                                <div className='mt-3 p-3 bg-indigo-50/60 border border-indigo-100 border-l-4 border-l-indigo-500 rounded-lg'>
-                                                    <span className='block text-[10px] font-bold uppercase tracking-wider text-indigo-600 mb-1'>
-                                                        ✨ AI Summary
-                                                    </span>
-                                                    <p className='text-xs text-slate-700 leading-relaxed whitespace-pre-line'>
-                                                        {n.summary}
-                                                    </p>
-                                                </div>
-                                            )}
-
-                                            {/* 🏷️ Styled AI Tags Pill List */}
-                                            {n.tags && n.tags.length > 0 && (
-                                                <div className='flex flex-wrap gap-1.5 mt-3'>
-                                                    {n.tags.map((tag, index) => (
-                                                        <span
-                                                            key={index}
-                                                            className='px-2.5 py-0.5 text-[11px] font-medium bg-slate-100 text-slate-600 border border-slate-200 rounded-full'
-                                                        >
-                                                            #{tag.toLowerCase()}
+                                                    {n.content}
+                                                </p>
+                                                {/* ✨ Styled AI Summary Callout Box */}
+                                                {n.summary && n.summary.trim() !== '' && (
+                                                    <div className='mt-3 p-3 bg-indigo-50/60 border border-indigo-100 border-l-4 border-l-indigo-500 rounded-lg'>
+                                                        <span className='block text-[10px] font-bold uppercase tracking-wider text-indigo-600 mb-1'>
+                                                            ✨ AI Summary
                                                         </span>
-                                                    ))}
+                                                        <p className='text-xs text-slate-700 leading-relaxed whitespace-pre-line'>
+                                                            {n.summary}
+                                                        </p>
+                                                    </div>
+                                                )}
+
+                                                {/* 🏷️ Styled AI Tags Pill List */}
+                                                {Array.isArray(n.tags) && n.tags.flat(Infinity).length > 0 && (
+                                                    <div className='flex flex-wrap gap-1.5 mt-3'>
+                                                        {n.tags
+                                                            .flat(Infinity)
+                                                            .filter((tag) => typeof tag === 'string' && tag.trim() !== '')
+                                                            .map((tag, index) => (
+                                                                <span
+                                                                    key={index}
+                                                                    className='px-2.5 py-0.5 text-[11px] font-medium bg-slate-100 text-slate-600 border border-slate-200 rounded-full'
+                                                                >
+                                                                    #{tag.toLowerCase()}
+                                                                </span>
+                                                            ))}
+                                                    </div>
+                                                )}
+
+
+                                            </div>
+
+                                            <div className='mt-4 flex justify-between border-t border-slate-100 pt-2 text-xs font-medium'>
+                                                <div className='flex flex-col  gap-1'>
+                                                    <span>
+                                                        <span>🗓️Created:</span>  {new Date(n.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+                                                    </span>
+
+                                                    <span>
+                                                        <span>🔄Updated:</span>  {new Date(n.updatedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+                                                    </span>
+
                                                 </div>
-                                            )}
-                                        </div>
+                                                {/* FIXED: Added edit and delete buttons with proper handlers and styling*/}
+                                                <div className='flex justify-end gap-2' >
+                                                    <Button
+                                                        type="button"
+                                                        onClick={() => { setIsModalOpen(true); setEditingId(n._id || n.id); setTitle(n.title); setContent(n.content); }}
+                                                        className='bg-indigo-50 text-slate-700 hover:bg-indigo-100 shadow-none'>
 
-                                        <div className='mt-4 flex justify-between border-t border-slate-100 pt-2 text-xs font-medium'>
-                                            <div className='flex flex-col  gap-1'>
-                                                <span>
-                                                    <span>🗓️Created:</span>  {new Date(n.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
-                                                </span>
+                                                        ✨AI.
+                                                    </Button>
 
-                                                <span>
-                                                    <span>🔄Updated:</span>  {new Date(n.updatedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
-                                                </span>
+                                                    <Button
+                                                        type="button"
+                                                        className='bg-green-50 text-green-700 hover:bg-green-100 shadow-none'
+                                                        onClick={
+                                                            () => {
+                                                                setEditingId(n._id || n.id); setTitle(n.title); setContent(n.content); setNoteModal(true);
+                                                                if (textAreaRef.current) {
+                                                                    textAreaRef.current.focus();
+                                                                    textAreaRef.current.scrollIntoView({ behaviour: 'smooth', block: 'center' });
+                                                                }
 
-                                            </div>
-                                            {/* FIXED: Added edit and delete buttons with proper handlers and styling*/}
-                                            <div className='flex justify-end gap-2' >
-                                                <Button
-                                                    type="button"
-                                                    onClick={() => { setIsModalOpen(true); setEditingId(n._id || n.id); setTitle(n.title); setContent(n.content); }}
-                                                    className='bg-indigo-50 text-slate-700 hover:bg-indigo-100 shadow-none'>
+                                                            }}>
+                                                        Edit
+                                                    </Button>
+                                                    <Button
+                                                        type="button"
+                                                        className='bg-rose-50 text-rose-700 hover:bg-rose-100 shadow-none'
+                                                        onClick={() => handleDelete(n)}>
+                                                        Delete
+                                                    </Button>
 
-                                                    ✨AI.
-                                                </Button>
-
-                                                <Button
-                                                    type="button"
-                                                    className='bg-green-50 text-green-700 hover:bg-green-100 shadow-none'
-                                                    onClick={
-                                                        () => {
-                                                            setEditingId(n._id || n.id); setTitle(n.title); setContent(n.content); setNoteModal(true);
-                                                            if (textAreaRef.current) {
-                                                                textAreaRef.current.focus();
-                                                                textAreaRef.current.scrollIntoView({ behaviour: 'smooth', block: 'center' });
-                                                            }
-
-                                                        }}>
-                                                    Edit
-                                                </Button>
-                                                <Button
-                                                    type="button"
-                                                    className='bg-rose-50 text-rose-700 hover:bg-rose-100 shadow-none'
-                                                    onClick={() => handleDelete(n)}>
-                                                    Delete
-                                                </Button>
+                                                </div>
 
                                             </div>
 
+
                                         </div>
-                                        {/* AI Summary Modal */}
-                                        {isModalOpen && (
-                                            <NoteAiAssistant
-                                                activeNoteId={editingId}
-                                                noteTitle={title}
-                                                onClose={() => { setIsModalOpen(false); setEditingId(null); setTitle(''); setContent(''); }}
-                                            />
-                                        )}
-
-                                    </div>
 
 
-                                )))}
+
+                                    )
+
+
+
+                                    ))}
+                            {/* AI Summary Modal */}
+                            {isModalOpen && (
+                                <NoteAiAssistant
+                                    activeNoteId={editingId}
+                                    noteTitle={title}
+                                    onClose={() => { setIsModalOpen(false); setEditingId(null); setTitle(''); setContent(''); }}
+                                />
+                            )}
                         </div>
                     )}
 
                 </div>
 
             </div>
+            {/* AI Chat Modal */}
+
         </div>
     )
 }

@@ -59,8 +59,12 @@ export const autoTagNote = async (req, res) =>{
       }
     });
     const tags = JSON.parse(response.text);
-    note.tags = tags;
-    await note.save();
+    // Atomic update avoids Mongoose VersionError (__v) conflicts
+    const updatedNote = await Note.findOneAndUpdate(
+      { _id: noteId, userId: req.userId },
+      { $set: { tags } },
+      { returnDocument: 'after' }
+    );
     return res.status(200).json({success:true , tags})    
   } catch (error) {
     console.error('Tagging Error:', error)
@@ -90,5 +94,17 @@ export const saveNoteSummary = async (req, res) =>{
   } catch (error) {
     console.error('Save Summary Error:', error)
     return res.status(500).json({message:'Failed to save summary.', error: error.message})
+  }
+}
+
+//chat with a single note or all saved notes
+export const chatWithNotes = async (req , res) =>{
+  try {
+    const {message , history=[], noteId} = req.body;
+    if(!message || !message.trim()) {
+      return res.status(400).json({success:false,message:'Message is required!'})
+    }
+  } catch (error) {
+    
   }
 }

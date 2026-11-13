@@ -51,6 +51,10 @@ function Features() {
         {
             title:'One-Click Google Login.',
             description:'Skip the password entirely. Instantly sign up or log in securely using your existing Google account.'
+        },
+        {
+            title:'API Rate limiting.',
+            description:'Your account is shielded against brute-force attacks and spam with strict request limits on login and authentication endpoints.'
         }
     ]
 
