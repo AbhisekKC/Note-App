@@ -44,7 +44,7 @@ function ForgotPassword() {
       <div className="w-full max-w-md space-y-6">
         <div className="text-center space-y-2">
           <h1 className='text-3xl font-bold tracking-tight text-green-600'>Reset your password.</h1>
-          <p className='text-gray-600'>Enter your email address and we'll send you instructions to reset your password.</p>
+          <p className='text-slate-600'>Enter your email address and we'll send you instructions to reset your password.</p>
         </div>
 
         <Card className='bg-white shadow-xl rounded-2xl'>
@@ -88,7 +88,7 @@ function ForgotPassword() {
               </div>
             ) : (
               <form onSubmit={handleForgotPassword} className='space-y-4 px-6'>
-                <div className='w-full space-y-2 relative text-gray-800'>
+                <div className='w-full space-y-2 relative text-slate-800'>
                   <Label>Email</Label>
                   <Input 
                     className='w-full border-2 p-2 rounded-md' 
@@ -118,7 +118,7 @@ function ForgotPassword() {
             )}
           </CardContent>
 
-          <CardFooter className='flex justify-center border-t pt-4 text-sm text-gray-600'>
+          <CardFooter className='flex justify-center border-t pt-4 text-sm text-slate-600'>
             <p>Remember your password?{' '}</p>
             <div className='pl-1'>
               <Link className='text-green-600 hover:underline font-medium' to={'/login'}>

@@ -7,6 +7,7 @@ import { Eye, EyeOff, Loader2 } from "lucide-react"
 import  {userApi}  from "@/api/axios"
 import { toast } from 'sonner'
 import { useNavigate, Link } from 'react-router-dom'
+import ScrollReveal from "@/components/ScrollReveal"
 
 function Signup() {
   const navigate = useNavigate();
@@ -64,7 +65,7 @@ function Signup() {
   }
 
   return (
-    <div className='relative w-full h-screen bg-green-100 overflow-hidden flex items-center justify-center p-4'>
+    <ScrollReveal className='relative w-full h-screen overflow-hidden flex items-center justify-center p-4'>
       <Card className="w-full max-w-md shadow-lg">
         <CardHeader className='space-y-1 text-center'>
           <CardTitle className='text-2xl text-green-600'>Sign Up for an Account</CardTitle>
@@ -126,9 +127,9 @@ function Signup() {
                     disabled={isLoading}
                   >
                     {showPassword ? (
-                      <EyeOff className='w-4 h-4 text-gray-600' />
+                      <EyeOff className='w-4 h-4 text-slate-600' />
                     ) : (
-                      <Eye className='w-4 h-4 text-gray-600' />
+                      <Eye className='w-4 h-4 text-slate-600' />
                     )}
                   </Button>
                 </div>
@@ -152,7 +153,7 @@ function Signup() {
           </CardFooter>
         </form>
       </Card>
-    </div>
+    </ScrollReveal>
   )
 }
 

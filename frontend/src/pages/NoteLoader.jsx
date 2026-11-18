@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
 import NoteAiAssistant from '@/components/NoteAiAssistant'
 import NoteSkeleton from '@/components/NoteSkeleton'
+import ScrollReveal from '@/components/ScrollReveal'
 
 function NoteLoader() {
     const [notes, setNotes] = useState([])
@@ -36,7 +37,7 @@ function NoteLoader() {
         } catch (error) {
             console.log("Error Fetching notes:", error)
         } finally {
-            setTimeout(() => setIsLoading(false), 500)
+            setTimeout(() => setIsLoading(false), 1000)
         }
     }
 
@@ -152,7 +153,8 @@ function NoteLoader() {
             </div>
             {/* Form panel */}
             {noteModal &&
-                <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs p-4'>
+                    <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs p-4'>
+                    
                     <form
 
                         onSubmit={handleSubmit}
@@ -207,6 +209,8 @@ function NoteLoader() {
                         }
                     </form>
                 </div>
+                
+                
             }
 
 
@@ -262,7 +266,7 @@ function NoteLoader() {
                                 ([...filteredNotes]
                                     .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
                                     .map(n => (
-                                        <div key={n._id || n.id} className='bg-white border border-slate-200 rounded-xl p-4 pr-6 shadow-sm flex flex-col justify-between '>
+                                        <ScrollReveal key={n._id || n.id} className='bg-white border border-slate-200 rounded-xl p-4 pr-6 shadow-sm flex flex-col justify-between '>
                                             <div>
                                                 {/* ✨ Updated Title (h2) */}
                                                 <h2 className='text-lg font-bold text-slate-900 tracking-tight leading-snug line-clamp-2'>
@@ -278,7 +282,7 @@ function NoteLoader() {
                                                 </p>
                                                 {/* ✨ Styled AI Summary Callout Box */}
                                                 {n.summary && n.summary.trim() !== '' && (
-                                                    <div className='mt-3 p-3 bg-indigo-50/60 border border-indigo-100 border-l-4 border-l-indigo-500 rounded-lg'>
+                                                    <div className='mt-3 p-3  border border-indigo-100 border-l-4 border-l-indigo-500 rounded-lg'>
                                                         <span className='block text-[10px] font-bold uppercase tracking-wider text-indigo-600 mb-1'>
                                                             ✨ AI Summary
                                                         </span>
@@ -324,7 +328,7 @@ function NoteLoader() {
                                                     <Button
                                                         type="button"
                                                         onClick={() => { setIsModalOpen(true); setEditingId(n._id || n.id); setTitle(n.title); setContent(n.content); }}
-                                                        className='bg-indigo-50 text-slate-700 hover:bg-indigo-100 shadow-none'>
+                                                        className='bg-white text-slate-700 hover:bg-slate-200 shadow-none'>
 
                                                         ✨AI.
                                                     </Button>
@@ -355,7 +359,7 @@ function NoteLoader() {
                                             </div>
 
 
-                                        </div>
+                                        </ScrollReveal>
 
 
 

@@ -52,7 +52,7 @@ function ChangePassword() {
     <div className='min-h-screen flex items-center justify-center bg-green-100 px-4'>
       <div className='bg-white shadow-md rounded-lg p-5 max-w-md w-full'>
         <h2 className='text-2xl font-semibold mb-4 text-center'>Change Old Password!!</h2>
-        <p className='text-sm text-gray-500 text-center mb-4'>
+        <p className='text-sm text-slate-500 text-center mb-4'>
           Set a new password for <span className='font-semibold'>{email}</span>
         </p>
 
@@ -77,9 +77,9 @@ function ChangePassword() {
               disabled={isLoading}
             >
               {showNewPassword ? (
-                <EyeOff className='w-4 h-4 text-gray-600' />
+                <EyeOff className='w-4 h-4 text-slate-600' />
               ) : (
-                <Eye className='w-4 h-4 text-gray-600' />
+                <Eye className='w-4 h-4 text-slate-600' />
               )}
             </Button>
           </div>
@@ -101,9 +101,9 @@ function ChangePassword() {
               disabled={isLoading}
             >
               {showConfirmPassword ? (
-                <EyeOff className='w-4 h-4 text-gray-600' />
+                <EyeOff className='w-4 h-4 text-slate-600' />
               ) : (
-                <Eye className='w-4 h-4 text-gray-600' />
+                <Eye className='w-4 h-4 text-slate-600' />
               )}
             </Button>
           </div>
@@ -123,7 +123,7 @@ function ChangePassword() {
             )}
           </Button>
 
-          <div className='text-center text-sm text-gray-500'>
+          <div className='text-center text-sm text-slate-500'>
             <p>
               Remember your password?{' '}
               <span className='text-sm font-bold hover:underline'>

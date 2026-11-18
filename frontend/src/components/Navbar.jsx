@@ -15,8 +15,9 @@ import {
 import { UserContext } from '@/context/userContext'
 import { useContext } from 'react'
 import { toast } from 'sonner'
-
+import ModeToggle from '@/components/ModeToggle'
 import { userApi } from '@/api/axios'
+
 
 function Navbar() {
     const navigate = useNavigate()
@@ -54,7 +55,7 @@ function Navbar() {
 
     return (
         <nav className='fixed top-0 left-0 w-full px-4 py-3  z-50 backdrop-blur-sm '>
-
+            
             <div className="max-w-7xl mx-auto px-1 sm:px-4">
                 {/* Stacks vertically on mobile (flex-col), side-by-side on larger screens (sm:flex-row) */}
                 <div className="flex flex-col sm:flex-row  justify-between items-center gap-3 sm:gap-0 sm:h-12">
@@ -69,7 +70,7 @@ function Navbar() {
                             <span className="text-green-600">Notes</span>App
                         </span>
                     </Link>
-
+                     
                     {/* Bottom Row on Mobile: Links + User/Auth Actions */}
                     <div className="flex flex-wrap justify-center sm:justify-end items-center gap-4 sm:gap-6 w-full sm:w-auto">
                         <ul className="flex items-center gap-4 sm:gap-5 text-sm text-slate-800 font-medium">
@@ -87,6 +88,9 @@ function Navbar() {
                                 <Link to="/about" className="hover:text-green-600 transition-colors hover:underline">
                                     ❓ About
                                 </Link>
+                            </li>
+                            <li>
+                                <ModeToggle />
                             </li>
                         </ul>
 

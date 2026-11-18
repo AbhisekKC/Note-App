@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { useNavigate } from 'react-router-dom'
 import { AvatarImage } from '@/components/ui/avatar'
+import ScrollReveal from '@/components/ScrollReveal'
 
 function Profile() {
     const navigate = useNavigate();
@@ -26,7 +27,7 @@ function Profile() {
      : ' Just Now!!'
 
     return (
-        <div className='bg-linear-to-l from-green-200 to-white min-h-screen py-10 px-4 flex justify-center items-start'>
+        <ScrollReveal className='bg-linear-to-l from-green-200 to-white min-h-screen py-10 px-4 flex justify-center items-start'>
             <div className='w-full max-w-2xl bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden mt-6 mb-20'>
                 
                 {/* Header accent bar */}
@@ -143,7 +144,7 @@ function Profile() {
                 </div>
                
             </div>
-        </div>
+        </ScrollReveal>
     )
 }
 

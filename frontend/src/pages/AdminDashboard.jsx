@@ -5,6 +5,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { toast } from 'sonner'
 import { authApi } from '@/api/axios'
 import AdminSkeleton from '@/components/AdminSkeleton'
+import ScrollReveal from '@/components/ScrollReveal'
 
 export default function AdminDashboard() {
     const [metrics, setMetrics] = useState({ totalUsers: 0, totalNotes: 0, activeAdminCount: 1 })
@@ -54,7 +55,7 @@ export default function AdminDashboard() {
 
             // Process users data
             if (usersRes.data.success) {
-                console.log('Fetched users:', usersRes.data.users);
+                //console.log('Fetched users:', usersRes.data.users);
                 // Merge mock users with fetched users, ensuring no duplicates based on _id
                 const mergedUsers = [...mockUsers, ...usersRes.data.users];
                 setUsersList(mergedUsers);
@@ -62,7 +63,7 @@ export default function AdminDashboard() {
 
             // Process notes data
             if (notesRes.data.success) {
-                console.log('Fetched notes:', notesRes.data.notes);
+               // console.log('Fetched notes:', notesRes.data.notes);
                 // Merge mock notes with fetched notes, ensuring no duplicates based on _id
                 const mergedNotes = [...mockNotes, ...notesRes.data.notes];
                 setNotesList(mergedNotes);
@@ -79,7 +80,7 @@ export default function AdminDashboard() {
         let totalAdmins = users.filter(user => user.role === 'admin').length;
         let totalUsers = users.length;
         let totalNotes = notes.length;
-        console.log('Metrics calculated:', { totalUsers, totalNotes, totalAdmins });
+        //console.log('Metrics calculated:', { totalUsers, totalNotes, totalAdmins });
         setMetrics({ totalUsers: totalUsers, totalNotes: totalNotes, activeAdminCount: totalAdmins });
 
     }
@@ -197,7 +198,7 @@ export default function AdminDashboard() {
 
     //handling Notes section
     const handleDeleteNote = (noteId, noteTitle) => {
-        if (window.confirm(`Are you sure you want to moderate and delete this note: ${noteTitle}`)) {
+        if (window.confirm(`Are you sure you want to moderate and delete this note: ${noteTitle}?`)) {
             setNotesList(prev => prev.filter(n => n._id !== noteId));
 
             setMetrics(prev => ({
@@ -227,14 +228,14 @@ export default function AdminDashboard() {
             <div className='max-w-6xl w-full mx-auto space-y-6'>
 
                 {/* Header Block Control Matrix */}
-                <div className='flex items-center gap-3 rounded-xl border-b bg-linear-to-l from-green-200 to-white p-4'>
+                <ScrollReveal className='flex items-center gap-3 rounded-xl border-b bg-linear-to-l from-green-200 to-white p-4'>
                     <ShieldAlert className='h-8 w-8 text-indigo-600 shrink-0' />
                     <div>
                         <h1 className='text-3xl font-bold text-slate-800 tracking-tight'>Admin Panel.</h1>
                         <p className='text-sm text-slate-500'>Monitor MERN stack metrics data and manage system control access parameters.</p>
                         <p className='text-sm text-slate-500'>This is a mock Admin Panel for others users to interact with so they can see how it works, only Admin level users are allowed to change the data in the database.</p>
                     </div>
-                </div>
+                </ScrollReveal>
 
 
                 {/* Data Cards Layer Grid */}
@@ -246,7 +247,7 @@ export default function AdminDashboard() {
                     <div className='max-w-6xl w-full mx-auto space-y-6'>
 
                         {/* Updated Grid for 3 cards */}
-                        <div className='grid grid-cols-1 sm:grid-cols-3 gap-6'>
+                        <ScrollReveal className='grid grid-cols-1 sm:grid-cols-3 gap-6'>
                             <div className='bg-white p-5 rounded-xl shadow-sm border border-slate-200 flex items-center justify-between'>
                                 <div>
                                     <p className='text-xs font-semibold text-slate-500 uppercase tracking-wider'>Total Registered Users</p>
@@ -270,10 +271,10 @@ export default function AdminDashboard() {
                                 </div>
                                 <div className='bg-purple-50 p-3 rounded-xl text-purple-600'><Activity className='h-6 w-6' /></div>
                             </div>
-                        </div>
+                        </ScrollReveal>
 
                         {/* User Management System Table */}
-                        <div className='bg-linear-to-l from-green-200 to-white rounded-xl shadow-sm border border-slate-200 overflow-hidden'>
+                        <ScrollReveal className='bg-linear-to-l from-green-200 to-white rounded-xl shadow-sm border border-slate-200 overflow-hidden'>
                             <div className='p-5 flex justify-between border-b border-slate-100 bg-slate-50/50'>
                                 <h3 className='font-bold text-slate-800 text-lg'>System User Registry!</h3>
                                 {/* search bar real-time */}
@@ -368,7 +369,7 @@ export default function AdminDashboard() {
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
+                        </ScrollReveal>
 
 
                         {/* Add User Model dialog wrapper */}
@@ -533,7 +534,7 @@ export default function AdminDashboard() {
                     </div>
                 )}
                 {/*Notes panel   */}
-                <div className='space-y-6 p-4 border-2 border-slate-200 shadow-xl rounded-xl'>
+                <ScrollReveal className='space-y-6 p-4 border-2 border-slate-200 shadow-xl rounded-xl'>
                     <div className='flex flex-col  sm:flex-row sm:items-center sm:justify-between gap-4'>
                         <h1 className='text-xl font-bold text-slate-800 flex items-center gap-2'>
                             <FileText className='h-5 w-5 text-slate-500' /> Global Notes Registry.
@@ -610,7 +611,7 @@ export default function AdminDashboard() {
                     </div>
 
 
-                </div>
+                </ScrollReveal>
 
             </div>
         </div>

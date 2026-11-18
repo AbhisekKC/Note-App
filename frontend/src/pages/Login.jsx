@@ -8,8 +8,7 @@ import {userApi} from "@/api/axios.js"
 import { toast } from 'sonner'
 import { useNavigate , Link } from 'react-router-dom'
 import { getData } from "@/context/userContext"
-import { faGlobe } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ScrollReveal from "@/components/ScrollReveal"
 // import googleLogin
 import { GoogleLogin } from "@react-oauth/google"
 
@@ -87,7 +86,7 @@ function Login() {
   }
 
   return (
-    <div className='relative w-full h-screen bg-green-100 overflow-hidden flex items-center justify-center p-4'>
+    <ScrollReveal className='relative w-full h-screen  overflow-hidden flex items-center justify-center p-4'>
       <Card className="w-full max-w-md shadow-lg">
         <CardHeader className='space-y-1 text-center'>
           <CardTitle className='text-2xl text-green-600'>Sign in to your Account</CardTitle>
@@ -138,9 +137,9 @@ function Login() {
                     disabled={isLoading}
                   >
                     {showPassword ? (
-                      <EyeOff className='w-4 h-4 text-gray-600' />
+                      <EyeOff className='w-4 h-4 text-slate-600' />
                     ) : (
-                      <Eye className='w-4 h-4 text-gray-600' />
+                      <Eye className='w-4 h-4 text-slate-600' />
                     )}
                   </Button>
                   
@@ -186,7 +185,7 @@ function Login() {
           </CardFooter>
         </form>
       </Card>
-    </div>
+    </ScrollReveal>
   )
 }
 
