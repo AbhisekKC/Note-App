@@ -41,9 +41,9 @@ function NoteSkeleton({ count = 6 }) {
                         </div>
 
                         <div className='flex justify-end gap-2'>
-                            <div className='h-8 w-12 bg-indigo-50 rounded-md'></div>
-                            <div className='h-8 w-12 bg-green-50 rounded-md'></div>
-                            <div className='h-8 w-14 bg-rose-50 rounded-md'></div>
+                            <div className='h-8 w-12  rounded-md'></div>
+                            <div className='h-8 w-12  rounded-md'></div>
+                            <div className='h-8 w-14  rounded-md'></div>
                         </div>
                     </div>
                 </div>

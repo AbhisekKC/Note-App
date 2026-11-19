@@ -88,16 +88,15 @@ export default function AdminDashboard() {
 
     //useEffect to fetch data from backend
     useEffect(() => {
-        fetchDashboardData();
-
-        const timer = setTimeout(() => setIsLoading(false), 1000);
-        return () => clearTimeout(timer);
+        fetchDashboardData();    
     }, [])
-
+   // have to do it separately otherwise it will lag.
     useEffect(() => {
         if (usersList.length > 0 || notesList.length > 0) {
             setMetricsFromData(usersList, notesList);
         }
+        const timer = setTimeout(() => setIsLoading(false), 1000);// put this in the metrics useEffect to fix the data load delay.
+        return () => clearTimeout(timer);
     }, [usersList, notesList]);
 
 
