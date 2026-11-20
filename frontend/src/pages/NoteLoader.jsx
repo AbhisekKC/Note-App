@@ -25,19 +25,20 @@ function NoteLoader() {
 
     // Fetch Notes on Load
     useEffect(() => {
+        setIsLoading(true)
         fetchNotes()
-
+        setTimeout(() => setIsLoading(false), 1000)
     }, [])
 
     const fetchNotes = async () => {
-        setIsLoading(true)
+        //setIsLoading(true)
         try {
             const res = await noteApi.get('/all')
             setNotes(res.data.notes || [])
         } catch (error) {
             console.log("Error Fetching notes:", error)
         } finally {
-            setTimeout(() => setIsLoading(false), 1000)
+           // setTimeout(() => setIsLoading(false), 1000)
         }
     }
 
@@ -252,7 +253,7 @@ function NoteLoader() {
                         </div>
                     ) : (
                         // FIXED: Removed restrictive grid height parameters so elements align fluidly
-                        <div className='grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 h-full w-full p-2'>
+                        <div className='grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-4 h-full w-full p-2'>
                             {filteredNotes.length === 0 ?
                                 <h1 className='flex items-center text-center justify-center font-bold text-xl font-serif'>
                                     No notes where found in  the cloud...
@@ -269,13 +270,13 @@ function NoteLoader() {
                                         <ScrollReveal key={n._id || n.id} className='bg-white border border-slate-200 rounded-xl p-4 pr-6 shadow-sm flex flex-col justify-between '>
                                             <div>
                                                 {/* ✨ Updated Title (h2) */}
-                                                <h2 className='text-lg font-bold text-slate-900 tracking-tight leading-snug line-clamp-2'>
+                                                <h2 className='text-2xl font-bold text-slate-900 tracking-tight leading-snug line-clamp-2'>
                                                     {n.title}
                                                 </h2>
 
                                                 {/* ✨ Updated Content (p) */}
-                                                <p className='text-sm text-slate-600 border rounded-lg border-indigo-100 border-l-4 border-l-green-500 leading-relaxed mt-3 p-3 whitespace-pre-wrap wrap-break-word'>
-                                                    <span className='block text-[10px] font-bold uppercase tracking-wider text-green-600 mb-1'>
+                                                <p className=' text-slate-600 border rounded-lg border-indigo-100 border-l-4 border-l-green-500 leading-relaxed mt-3 p-3 whitespace-pre-wrap wrap-break-word'>
+                                                    <span className='block text-[15px] font-bold uppercase tracking-wider text-green-600 mb-1'>
                                                         ✨ Your notes
                                                     </span>
                                                     {n.content}
@@ -283,10 +284,10 @@ function NoteLoader() {
                                                 {/* ✨ Styled AI Summary Callout Box */}
                                                 {n.summary && n.summary.trim() !== '' && (
                                                     <div className='mt-3 p-3  border border-indigo-100 border-l-4 border-l-indigo-500 rounded-lg'>
-                                                        <span className='block text-[10px] font-bold uppercase tracking-wider text-indigo-600 mb-1'>
+                                                        <span className='block text-[15px] font-bold uppercase tracking-wider text-indigo-600 mb-1'>
                                                             ✨ AI Summary
                                                         </span>
-                                                        <p className='text-xs text-slate-700 leading-relaxed whitespace-pre-line'>
+                                                        <p className='text-sm text-slate-700 leading-relaxed whitespace-pre-line'>
                                                             {n.summary}
                                                         </p>
                                                     </div>

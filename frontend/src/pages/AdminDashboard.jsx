@@ -95,7 +95,7 @@ export default function AdminDashboard() {
         if (usersList.length > 0 || notesList.length > 0) {
             setMetricsFromData(usersList, notesList);
         }
-        const timer = setTimeout(() => setIsLoading(false), 1000);// put this in the metrics useEffect to fix the data load delay.
+        const timer = setTimeout(() => setIsLoading(false), 2000);// put this in the metrics useEffect to fix the data load delay.
         return () => clearTimeout(timer);
     }, [usersList, notesList]);
 
@@ -384,8 +384,8 @@ export default function AdminDashboard() {
 
                         {
                             isAddModalOpen && (
-                                <div className='fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center mt-auto p-4 z-40 animate-fade-in'>
-                                    <div className='bg-linear-to-l from-green-200  w-full max-w-md rounded-2xl shadow-xl border border-slate-100 overflow-hiiden transform scale-100 transition-transform'>
+                                <div className='fixed inset-0 bg-slate-900/30 backdrop-blur-xs flex items-center justify-center mt-auto p-4 z-40 animate-fade-in'>
+                                    <div className='bg-linear-to-l from-green-200  w-full max-w-md rounded-2xl shadow-xl border border-slate-100 overflow-hidden transform scale-100 transition-transform'>
                                         {/* Modal Header */}
                                         <div className='p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50'>
                                             <h3 className='font-bold text-slate-800 text-lg'>Register New Authorization Profile.</h3>
@@ -487,7 +487,7 @@ export default function AdminDashboard() {
                                 <div
                                     className='fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4 z-40 animate-fade-in'
                                 >
-                                    <div className='w-full max-w-md bg-linear-to-l from-green-200 rounded-2xl shadow-2xl border border-slate-100 overflow-hiden transform scale-100 transition-colors'>
+                                    <div className='w-full max-w-md bg-linear-to-l from-green-200 rounded-2xl shadow-2xl border border-slate-100 overflow-hidden transform scale-100 transition-colors'>
 
                                         {/* Header for edit model */}
                                         <div className='p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50 '>
