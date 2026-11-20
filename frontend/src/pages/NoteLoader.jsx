@@ -374,7 +374,7 @@ function NoteLoader() {
                                 <NoteAiAssistant
                                     activeNoteId={editingId}
                                     noteTitle={title}
-                                    onClose={() => { setIsModalOpen(false); setEditingId(null); setTitle(''); setContent(''); }}
+                                    onClose={() => { setIsModalOpen(false); setEditingId(null); setTitle(''); setContent(''); fetchNotes(); }}
                                 />
                             )}
                         </div>

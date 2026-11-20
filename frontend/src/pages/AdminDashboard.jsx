@@ -385,7 +385,7 @@ export default function AdminDashboard() {
                         {
                             isAddModalOpen && (
                                 <div className='fixed inset-0 bg-slate-900/30 backdrop-blur-xs flex items-center justify-center mt-auto p-4 z-40 animate-fade-in'>
-                                    <div className='bg-linear-to-l from-green-200  w-full max-w-md rounded-2xl shadow-xl border border-slate-100 overflow-hidden transform scale-100 transition-transform'>
+                                    <ScrollReveal className='bg-linear-to-l from-green-200 mt-20 w-full max-w-md rounded-2xl shadow-xl border border-slate-100 overflow-hidden transform scale-100 transition-transform'>
                                         {/* Modal Header */}
                                         <div className='p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50'>
                                             <h3 className='font-bold text-slate-800 text-lg'>Register New Authorization Profile.</h3>
@@ -474,7 +474,7 @@ export default function AdminDashboard() {
                                         <div>
 
                                         </div>
-                                    </div>
+                                    </ScrollReveal>
 
                                 </div>
                             )
@@ -484,10 +484,8 @@ export default function AdminDashboard() {
 
                         {
                             editingUser && (
-                                <div
-                                    className='fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4 z-40 animate-fade-in'
-                                >
-                                    <div className='w-full max-w-md bg-linear-to-l from-green-200 rounded-2xl shadow-2xl border border-slate-100 overflow-hidden transform scale-100 transition-colors'>
+                                <div className='fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4 z-40 animate-fade-in'>
+                                    <ScrollReveal className='bg-linear-to-l from-green-200 mt-20 w-full max-w-md rounded-2xl shadow-xl border border-slate-100 overflow-hidden transform scale-100 transition-transform'>
 
                                         {/* Header for edit model */}
                                         <div className='p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50 '>
@@ -523,7 +521,7 @@ export default function AdminDashboard() {
                                                 <Button type='submit' className='px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors cursor-pointer shadow-xs' >Save Changes</Button>
                                             </div>
                                         </form>
-                                    </div>
+                                    </ScrollReveal>
                                 </div>
                             )
                         }
